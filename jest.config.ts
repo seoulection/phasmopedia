@@ -4,7 +4,7 @@ const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '\\.css?$': '<rootDir>/__mocks__/styleMock.ts'
+    '\\.css|png?$': '<rootDir>/__mocks__/mock.ts'
   },
   transform: {
     '\\.[jt]sx?$': 'ts-jest'

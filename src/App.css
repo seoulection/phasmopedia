@@ -1,42 +1,93 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  max-width: 1250px;
   padding: 2rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app {
+  display: grid;
+  grid-template-areas:
+  "header"
+  "evidence-filter"
+  "ghosts-container";
+  grid-template-rows: 1fr auto;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.evidence-filter-container {
+  display: flex;
+}
+
+.evidence-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  grid-area: evidence-filter;
+  margin-bottom: 1rem;
+}
+
+.ghosts-container {
+  display: grid;
+  grid-area: ghosts-container;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 4px;
+}
+
+.ghost-card {
+  display: grid;
+  border: 1px solid grey;
+  grid-gap: 1em;
+  grid-template-areas:
+  "info attributes";
+  grid-template-columns: 1fr 2fr;
+  height: 170px;
+  padding: 4px;
+  text-align: left;
+}
+
+.ghost-card__attributes {
+  font-size: 12px;
+  grid-area: attributes;
+  height: auto;
+
+  .strengths {
+    color: lightgreen;
   }
-  to {
-    transform: rotate(360deg);
+
+  .weaknesses {
+    color: red;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.ghost-card__attributes p {
+  margin: 0.3rem;
 }
 
-.card {
-  padding: 2em;
+.ghost-card__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-area: info;
 }
 
-.read-the-docs {
-  color: #888;
+.ghost-card__info h3 {
+  margin-top: 0;
+}
+
+.ghost-card__info p {
+  margin-bottom: 0;
+}
+
+.ghost-card__sanity {
+  font-size: 14px;
+}
+
+.header {
+  grid-area: header;
+  margin: 1rem 0;
+}
+
+.indeterminate-checkbox {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
 }
