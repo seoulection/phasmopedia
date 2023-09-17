@@ -28,6 +28,12 @@ function GhostCard({ filters, ghost, isRejected, onClick }: IGhostCard) {
     onClick(name)
   }
 
+  const handleGhostNameClick = () => {
+    if (name === 'Onryo') {
+      window.open('https://youtu.be/y1LUYJnGu-M?si=HjydhP5WwsFacuHi&t=30')
+    }
+  }
+
   const shouldShow = selectedFilters.every(filter => evidences.includes(filter)) &&
     !rejectedFilters.some(filter => evidences.includes(filter))
 
@@ -38,7 +44,7 @@ function GhostCard({ filters, ghost, isRejected, onClick }: IGhostCard) {
   return (
     <div className={ghostCardClass} data-testid="ghost-card" onClick={handleGhostCardClick}>
       <div className="ghost-card__info">
-        <h3 className="ghost-card__name">{name}</h3>
+        <h3 className="ghost-card__name" onClick={handleGhostNameClick}>{name}</h3>
         <div className="ghost-card__evidences">
           {buildEvidences()}
         </div>

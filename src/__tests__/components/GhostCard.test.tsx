@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import GhostCard from '../../components/GhostCard'
 import { Evidence } from '../../types'
 
@@ -77,5 +78,53 @@ describe('GhostCard', () => {
     expect(screen.queryByText(`Sanity: ${ghost.sanity}%`)).toBeNull()
     expect(screen.queryByText(/some strength/i)).toBeNull()
     expect(screen.queryByText(/some weakness/i)).toBeNull()
+  })
+
+  test('calls props onClick handler when ghost card is clicked', async () => {
+    const mockFn = jest.fn()
+
+    const filters = {
+      rejectedFilters: [],
+      selectedFilters: []
+    }
+
+    const ghost = {
+      name: 'Ghost',
+      evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
+      guaranteedEvidence: null,
+      sanity: 40,
+      strengths: ['some strength'],
+      weaknesses: ['some weakness']
+    }
+
+    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={mockFn} />)
+
+    await userEvent.click(screen.getByTestId('ghost-card'))
+
+    expect(mockFn).toHaveBeenCalledWith('Ghost')
+  })
+
+  test('adds onryo easter egg', async () => {
+    window.open = jest.fn()
+
+    const filters = {
+      rejectedFilters: [],
+      selectedFilters: []
+    }
+
+    const ghost = {
+      name: 'Onryo',
+      evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
+      guaranteedEvidence: null,
+      sanity: 40,
+      strengths: ['some strength'],
+      weaknesses: ['some weakness']
+    }
+
+    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={jest.fn} />)
+
+    await userEvent.click(screen.getByText(/onryo/i))
+
+    expect(window.open).toHaveBeenCalled()
   })
 })
