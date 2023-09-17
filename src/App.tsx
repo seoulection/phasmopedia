@@ -1,50 +1,48 @@
-import { useState } from 'react'
+import { useReducer } from 'react'
+import filtersReducer from './reducers/filtersReducer'
 import EvidenceFilter from './components/EvidenceFilter'
 import GhostsContainer from './components/GhostsContainer'
 import { GHOSTS } from '../static/ghosts'
-import { CheckboxState, Evidence, Filter } from './types'
+import { Action, CheckboxState, Evidence, Filter } from './types'
 import './App.css'
 
-function App() {
-  const [filters, setFilters] = useState<Filter>({
-    rejectedFilters: [],
-    selectedFilters: []
-  })
+const INITIAL_FILTERS: Filter = {
+  rejectedFilters: [],
+  rejectedGhosts: [],
+  selectedFilters: []
+}
 
-  const [rejectedGhostNames, setRejectedGhostNames] = useState<string[]>([])
+function App() {
+  const [filters, dispatch] = useReducer(filtersReducer, INITIAL_FILTERS)
 
   const handleFilterChange = (evidence: Evidence, state: CheckboxState) => {
     if (state === CheckboxState.Checked) {
-      setFilters({
-        ...filters,
-        selectedFilters: filters.selectedFilters.concat(evidence)
+      dispatch({
+        evidence: evidence,
+        type: Action.FilterSelected
       })
     } else if (state === CheckboxState.Indeterminate) {
-      setFilters({
-        rejectedFilters: filters.rejectedFilters.concat(evidence),
-        selectedFilters: filters.selectedFilters.filter(filter => filter !== evidence)
+      dispatch({
+        evidence: evidence,
+        type: Action.FilterRejected
       })
     } else {
-      setFilters({
-        ...filters,
-        rejectedFilters: filters.rejectedFilters.filter(filter => filter !== evidence)
+      dispatch({
+        evidence: evidence,
+        type: Action.FilterUnselected
       })
     }
   }
 
   const handleGhostCardClick = (name: string) => {
-    rejectedGhostNames.includes(name) ?
-      setRejectedGhostNames(rejectedGhostNames.filter(ghostName => ghostName !== name)) :
-      setRejectedGhostNames(rejectedGhostNames.concat(name))
+    dispatch({
+      name,
+      type: Action.GhostToggled
+    })
   }
 
   const handleReset = () => {
-    setFilters({
-      rejectedFilters: [],
-      selectedFilters: []
-    })
-
-    setRejectedGhostNames([])
+    dispatch({ type: Action.Reset })
   }
 
   return (
@@ -57,7 +55,6 @@ function App() {
       <GhostsContainer
         ghosts={GHOSTS}
         filters={filters}
-        rejectedGhostNames={rejectedGhostNames}
         onGhostCardClick={handleGhostCardClick}
       />
     </div>

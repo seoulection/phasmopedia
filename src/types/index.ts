@@ -1,3 +1,11 @@
+export enum Action {
+  FilterRejected,
+  FilterSelected,
+  FilterUnselected,
+  GhostToggled,
+  Reset
+}
+
 export enum CheckboxState {
   Checked = 'Checked',
   Indeterminate = 'Indeterminate',
@@ -15,8 +23,9 @@ export enum Evidence {
 }
 
 export type Filter = {
-  selectedFilters: Evidence[]
   rejectedFilters: Evidence[]
+  rejectedGhosts: string[]
+  selectedFilters: Evidence[]
 }
 
 export type Ghost = {

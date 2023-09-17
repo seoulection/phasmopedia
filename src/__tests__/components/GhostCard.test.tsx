@@ -1,15 +1,13 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { setupFilters } from '../helpers'
 import GhostCard from '../../components/GhostCard'
 import { Evidence } from '../../types'
 
 describe('GhostCard', () => {
   test('renders ghost card', () => {
-    const filters = {
-      rejectedFilters: [],
-      selectedFilters: []
-    }
+    const filters = setupFilters()
 
     const ghost = {
       name: 'Ghost',
@@ -20,7 +18,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={jest.fn} />)
+    render(<GhostCard ghost={ghost} filters={filters} onClick={jest.fn} />)
 
     expect(screen.getByText(ghost.name)).toBeInTheDocument()
     expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeInTheDocument()
@@ -33,10 +31,7 @@ describe('GhostCard', () => {
   })
 
   test("does not render ghost card if evidences are not in selected filters", () => {
-    const filters = {
-      rejectedFilters: [],
-      selectedFilters: [Evidence.Ultraviolet]
-    }
+    const filters = setupFilters({ selectedFilters: [Evidence.Ultraviolet] })
 
     const ghost = {
       name: 'Ghost',
@@ -47,7 +42,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={jest.fn}/>)
+    render(<GhostCard ghost={ghost} filters={filters} onClick={jest.fn}/>)
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -57,10 +52,8 @@ describe('GhostCard', () => {
   })
 
   test("does not render ghost card if evidences are in rejected filters", () => {
-    const filters = {
-      rejectedFilters: [Evidence.Ultraviolet],
-      selectedFilters: []
-    }
+    const filters = setupFilters({ rejectedFilters: [Evidence.Ultraviolet] })
+
 
     const ghost = {
       name: 'Ghost',
@@ -71,7 +64,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={jest.fn} />)
+    render(<GhostCard ghost={ghost} filters={filters} onClick={jest.fn} />)
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -83,10 +76,7 @@ describe('GhostCard', () => {
   test('calls props onClick handler when ghost card is clicked', async () => {
     const mockFn = jest.fn()
 
-    const filters = {
-      rejectedFilters: [],
-      selectedFilters: []
-    }
+    const filters = setupFilters()
 
     const ghost = {
       name: 'Ghost',
@@ -97,7 +87,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={mockFn} />)
+    render(<GhostCard ghost={ghost} filters={filters} onClick={mockFn} />)
 
     await userEvent.click(screen.getByTestId('ghost-card'))
 
@@ -107,10 +97,7 @@ describe('GhostCard', () => {
   test('adds onryo easter egg', async () => {
     window.open = jest.fn()
 
-    const filters = {
-      rejectedFilters: [],
-      selectedFilters: []
-    }
+    const filters = setupFilters()
 
     const ghost = {
       name: 'Onryo',
@@ -121,7 +108,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={jest.fn} />)
+    render(<GhostCard ghost={ghost} filters={filters} onClick={jest.fn} />)
 
     await userEvent.click(screen.getByText(/onryo/i))
 

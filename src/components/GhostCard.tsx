@@ -4,12 +4,11 @@ import type { Filter, Ghost } from '../types'
 interface IGhostCard {
   filters: Filter
   ghost: Ghost
-  isRejected: boolean
   onClick: (name: string) => void
 }
 
-function GhostCard({ filters, ghost, isRejected, onClick }: IGhostCard) {
-  const { rejectedFilters, selectedFilters } = filters
+function GhostCard({ filters, ghost, onClick }: IGhostCard) {
+  const { rejectedFilters, rejectedGhosts, selectedFilters } = filters
   const { name, evidences, guaranteedEvidence, sanity, strengths, weaknesses } = ghost
 
   const buildEvidences = () => {
@@ -39,7 +38,7 @@ function GhostCard({ filters, ghost, isRejected, onClick }: IGhostCard) {
 
   if (!shouldShow) return
 
-  const ghostCardClass = isRejected ? 'ghost-card rejected' : 'ghost-card'
+  const ghostCardClass = rejectedGhosts.includes(name) ? 'ghost-card rejected' : 'ghost-card'
 
   return (
     <div className={ghostCardClass} data-testid="ghost-card" onClick={handleGhostCardClick}>

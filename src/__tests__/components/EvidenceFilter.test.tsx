@@ -1,15 +1,13 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { setupFilters } from '../helpers'
 import EvidenceFilter from '../../components/EvidenceFilter'
 import { Evidence } from '../../types'
 
 describe('EvidenceFilter', () => {
   test('creates checkboxes for each evidence', () => {
-    const filters = {
-      rejectedFilters: [],
-      selectedFilters: []
-    }
+    const filters = setupFilters()
 
     render(<EvidenceFilter onFilterChange={jest.fn} filters={filters} />)
 
@@ -23,10 +21,7 @@ describe('EvidenceFilter', () => {
   })
 
   test('renders a checked checkbox if evidence is in selected filters', () => {
-    const filters = {
-      rejectedFilters: [],
-      selectedFilters: [Evidence.Ultraviolet]
-    }
+    const filters = setupFilters({ selectedFilters: [Evidence.Ultraviolet] })
 
     render(<EvidenceFilter onFilterChange={jest.fn} filters={filters} />)
 
@@ -38,10 +33,7 @@ describe('EvidenceFilter', () => {
   })
 
   test('renders an indeterminate checkbox if evidence is in rejected filters', () => {
-    const filters = {
-      rejectedFilters: [Evidence.DOTSProjector],
-      selectedFilters: []
-    }
+    const filters = setupFilters({ rejectedFilters: [Evidence.DOTSProjector] })
 
     render(<EvidenceFilter onFilterChange={jest.fn} filters={filters} />)
 
@@ -52,10 +44,7 @@ describe('EvidenceFilter', () => {
 
   test('clicking on a non-disabled checkbox calls onFilterChange', async () => {
     const mockFn = jest.fn()
-    const filters = {
-      rejectedFilters: [],
-      selectedFilters: []
-    }
+    const filters = setupFilters()
 
     render(<EvidenceFilter onFilterChange={mockFn} filters={filters} />)
 
@@ -65,10 +54,9 @@ describe('EvidenceFilter', () => {
   })
 
   test('disables non-checked checkboxes if there are three selected filters', () => {
-    const filters = {
-      rejectedFilters: [],
+    const filters = setupFilters({
       selectedFilters: [Evidence.DOTSProjector, Evidence.EMFLevelFive, Evidence.FreezingTemperatures]
-    }
+    })
 
     render(<EvidenceFilter onFilterChange={jest.fn} filters={filters} />)
 
