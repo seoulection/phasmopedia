@@ -9,6 +9,7 @@ import tempsImg from '/temps.png'
 
 interface IEvidence {
   evidence: EvidenceEnum
+  isGuaranteed?: boolean
 }
 
 const EVIDENCE_MAP = {
@@ -21,15 +22,26 @@ const EVIDENCE_MAP = {
   [EvidenceEnum.Ultraviolet]: fingiesImg
 }
 
-function Evidence({ evidence }: IEvidence) {
+function Evidence({ evidence, isGuaranteed }: IEvidence) {
+  const maybeHighlight = () => {
+    if (isGuaranteed) {
+      return <span className="evidence__highlight"></span>
+    }
+
+    return ""
+  }
+
   return (
-    <img
-      src={EVIDENCE_MAP[evidence]}
-      alt={evidence}
-      title={evidence}
-      height={25}
-      width={25}
-    />
+    <div className="evidence">
+      <img
+        src={EVIDENCE_MAP[evidence]}
+        alt={evidence}
+        title={evidence}
+        height={25}
+        width={25}
+      />
+      {maybeHighlight()}
+    </div>
   )
 }
 

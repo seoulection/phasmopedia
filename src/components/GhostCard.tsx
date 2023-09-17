@@ -4,16 +4,28 @@ import type { Filter, Ghost } from '../types'
 interface IGhostCard {
   filters: Filter
   ghost: Ghost
+  isRejected: boolean
+  onClick: (name: string) => void
 }
 
-function GhostCard({ filters, ghost }: IGhostCard) {
+function GhostCard({ filters, ghost, isRejected, onClick }: IGhostCard) {
   const { rejectedFilters, selectedFilters } = filters
-  const { name, evidences, sanity, strengths, weaknesses } = ghost
+  const { name, evidences, guaranteedEvidence, sanity, strengths, weaknesses } = ghost
 
   const buildEvidences = () => {
-    return evidences.map((evidence) => (
-      <Evidence key={evidence} evidence={evidence} />
-    ))
+    return evidences.map((evidence) => {
+      return (
+        <Evidence
+          key={evidence}
+          evidence={evidence}
+          isGuaranteed={evidence === guaranteedEvidence}
+        />
+      )
+    })
+  }
+
+  const handleGhostCardClick = () => {
+    onClick(name)
   }
 
   const shouldShow = selectedFilters.every(filter => evidences.includes(filter)) &&
@@ -21,8 +33,10 @@ function GhostCard({ filters, ghost }: IGhostCard) {
 
   if (!shouldShow) return
 
+  const ghostCardClass = isRejected ? 'ghost-card rejected' : 'ghost-card'
+
   return (
-    <div className="ghost-card" data-testid="ghost-card">
+    <div className={ghostCardClass} data-testid="ghost-card" onClick={handleGhostCardClick}>
       <div className="ghost-card__info">
         <h3 className="ghost-card__name">{name}</h3>
         <div className="ghost-card__evidences">

@@ -13,12 +13,13 @@ describe('GhostCard', () => {
     const ghost = {
       name: 'Ghost',
       evidences: [Evidence.GhostOrb, Evidence.GhostWriting, Evidence.Ultraviolet],
+      guaranteedEvidence: null,
       sanity: 40,
       strengths: ['some strength'],
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} />)
+    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={jest.fn} />)
 
     expect(screen.getByText(ghost.name)).toBeInTheDocument()
     expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeInTheDocument()
@@ -39,12 +40,13 @@ describe('GhostCard', () => {
     const ghost = {
       name: 'Ghost',
       evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.GhostWriting],
+      guaranteedEvidence: null,
       sanity: 40,
       strengths: ['some strength'],
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} />)
+    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={jest.fn}/>)
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -62,12 +64,13 @@ describe('GhostCard', () => {
     const ghost = {
       name: 'Ghost',
       evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
+      guaranteedEvidence: null,
       sanity: 40,
       strengths: ['some strength'],
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} />)
+    render(<GhostCard ghost={ghost} filters={filters} isRejected={false} onClick={jest.fn} />)
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)

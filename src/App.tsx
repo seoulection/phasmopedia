@@ -11,6 +11,8 @@ function App() {
     selectedFilters: []
   })
 
+  const [rejectedGhostNames, setRejectedGhostNames] = useState<string[]>([])
+
   const handleFilterChange = (evidence: Evidence, state: CheckboxState) => {
     if (state === CheckboxState.Checked) {
       setFilters({
@@ -30,6 +32,12 @@ function App() {
     }
   }
 
+  const handleGhostCardClick = (name: string) => {
+    rejectedGhostNames.includes(name) ?
+      setRejectedGhostNames(rejectedGhostNames.filter(ghostName => ghostName !== name)) :
+      setRejectedGhostNames(rejectedGhostNames.concat(name))
+  }
+
   return (
     <div className="app">
       <h1 className="header">Phasmopedia</h1>
@@ -37,7 +45,12 @@ function App() {
         filters={filters}
         onFilterChange={handleFilterChange}
       />
-      <GhostsContainer ghosts={GHOSTS} filters={filters} />
+      <GhostsContainer
+        ghosts={GHOSTS}
+        filters={filters}
+        rejectedGhostNames={rejectedGhostNames}
+        onGhostCardClick={handleGhostCardClick}
+      />
     </div>
   )
 }

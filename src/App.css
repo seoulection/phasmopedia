@@ -13,6 +13,17 @@
   grid-template-rows: 1fr auto;
 }
 
+.evidence {
+  display: flex;
+  flex-direction: column;
+}
+
+.evidence__highlight {
+  background-color: yellow;
+  height: 2px;
+  margin-top: 4px;
+}
+
 .evidence-filter-container {
   display: flex;
 }
@@ -35,6 +46,7 @@
 .ghost-card {
   display: grid;
   border: 1px solid grey;
+  cursor: pointer;
   grid-gap: 1em;
   grid-template-areas:
   "info attributes";
@@ -42,6 +54,11 @@
   height: 170px;
   padding: 4px;
   text-align: left;
+
+  &.rejected {
+    background-color: #202120;
+    text-decoration: line-through;
+  }
 }
 
 .ghost-card__attributes {
@@ -60,6 +77,10 @@
 
 .ghost-card__attributes p {
   margin: 0.3rem;
+}
+
+.ghost-card__evidences {
+  display: flex;
 }
 
 .ghost-card__info {

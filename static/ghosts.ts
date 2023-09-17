@@ -8,6 +8,7 @@ export const GHOSTS = [
       Evidence.GhostOrb,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       'Targets only one player at a time',
@@ -24,6 +25,7 @@ export const GHOSTS = [
       Evidence.GhostWriting,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: null,
     sanity: 70,
     strengths: [
       'Can initiate hunts more oftens',
@@ -40,6 +42,7 @@ export const GHOSTS = [
       Evidence.GhostWriting,
       Evidence.SpiritBox
     ],
+    guaranteedEvidence: Evidence.SpiritBox,
     sanity: 40,
     strengths: [
       'Always knows where a player is during hunts',
@@ -56,6 +59,7 @@ export const GHOSTS = [
       Evidence.EMFLevelFive,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: Evidence.DOTSProjector,
     sanity: 50,
     strengths: [
       'Can only be seen with D.O.T.S. through a camera when nobody is nearby'
@@ -71,6 +75,7 @@ export const GHOSTS = [
       Evidence.GhostOrb,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: Evidence.FreezingTemperatures,
     sanity: 50,
     strengths: [
       'Moves faster in lower temperatures'
@@ -88,6 +93,7 @@ export const GHOSTS = [
       Evidence.FreezingTemperatures,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       'Travels faster if a player is in line of sight'
@@ -104,6 +110,7 @@ export const GHOSTS = [
       Evidence.GhostWriting,
       Evidence.SpiritBox
     ],
+    guaranteedEvidence: null,
     sanity: 60,
     strengths: [
       'Increased chance to attack in the dark'
@@ -121,6 +128,7 @@ export const GHOSTS = [
       Evidence.GhostWriting,
       Evidence.SpiritBox
     ],
+    guaranteedEvidence: Evidence.SpiritBox,
     sanity: 50,
     strengths: [
       'Moves noticeably faster at low sanity',
@@ -137,6 +145,7 @@ export const GHOSTS = [
       Evidence.GhostWriting,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       'Produces quieter sounds during a hunt'
@@ -152,6 +161,7 @@ export const GHOSTS = [
       Evidence.GhostOrb,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: Evidence.Ultraviolet,
     sanity: 50,
     strengths: [
       'May leave fingerprints that disappear faster'
@@ -168,6 +178,7 @@ export const GHOSTS = [
       Evidence.EMFLevelFive,
       Evidence.FreezingTemperatures
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       'Increased activity when players are nearby'
@@ -184,6 +195,7 @@ export const GHOSTS = [
       Evidence.GhostOrb,
       Evidence.SpiritBox
     ],
+    guaranteedEvidence: null,
     sanity: 60,
     strengths: [
       'Can attack when a flame is extinguished'
@@ -199,6 +211,7 @@ export const GHOSTS = [
       Evidence.SpiritBox,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       "Looking at a Phantom will considerably lower the player's sanity",
@@ -216,6 +229,7 @@ export const GHOSTS = [
       Evidence.SpiritBox,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       'Can throw multiple objects at once',
@@ -232,6 +246,7 @@ export const GHOSTS = [
       Evidence.EMFLevelFive,
       Evidence.GhostOrb
     ],
+    guaranteedEvidence: null,
     sanity: 65,
     strengths: [
       'Moves faster near active electronic equipment'
@@ -247,6 +262,7 @@ export const GHOSTS = [
       Evidence.GhostOrb,
       Evidence.GhostWriting
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       'Moves significantly faster if player location is known during a hunt'
@@ -262,6 +278,7 @@ export const GHOSTS = [
       Evidence.FreezingTemperatures,
       Evidence.GhostWriting
     ],
+    guaranteedEvidence: null,
     sanity: 35,
     strengths: [
       'Less likely to perform interactions'
@@ -277,6 +294,7 @@ export const GHOSTS = [
       Evidence.GhostWriting,
       Evidence.SpiritBox
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [],
     weaknesses: [
@@ -290,6 +308,7 @@ export const GHOSTS = [
       Evidence.GhostOrb,
       Evidence.GhostWriting
     ],
+    guaranteedEvidence: null,
     sanity: 75,
     strengths: [
       'Entering the location makes it active, defensive, and agile'
@@ -305,6 +324,7 @@ export const GHOSTS = [
       Evidence.SpiritBox,
       Evidence.Ultraviolet
     ],
+    guaranteedEvidence: Evidence.GhostOrb,
     sanity: 50,
     strengths: [
       'Can mimic the abilities and traits of other ghosts'
@@ -320,6 +340,7 @@ export const GHOSTS = [
       Evidence.FreezingTemperatures,
       Evidence.SpiritBox
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       'Either twin may start a hunt',
@@ -336,6 +357,7 @@ export const GHOSTS = [
       Evidence.EMFLevelFive,
       Evidence.SpiritBox
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       'Cannot be tracked by footsteps',
@@ -352,6 +374,7 @@ export const GHOSTS = [
       Evidence.GhostOrb,
       Evidence.SpiritBox
     ],
+    guaranteedEvidence: null,
     sanity: 80,
     strengths: [
       'Talking near it will increase chance of attack'
@@ -367,6 +390,7 @@ export const GHOSTS = [
       Evidence.FreezingTemperatures,
       Evidence.GhostOrb
     ],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: [
       'Has a stronger effect on sanity'

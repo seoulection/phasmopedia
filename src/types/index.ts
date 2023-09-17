@@ -22,6 +22,7 @@ export type Filter = {
 export type Ghost = {
   name: string
   evidences: Evidence[]
+  guaranteedEvidence: Evidence | null
   sanity: number
   strengths: string[]
   weaknesses: string[]

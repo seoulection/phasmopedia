@@ -7,6 +7,7 @@ const GHOSTS = [
   {
     name: 'Ghost 1',
     evidences: [Evidence.GhostOrb, Evidence.GhostWriting, Evidence.Ultraviolet],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: ['some strength'],
     weaknesses: ['some weakness']
@@ -14,6 +15,7 @@ const GHOSTS = [
   {
     name: 'Ghost 2',
     evidences: [Evidence.EMFLevelFive, Evidence.SpiritBox, Evidence.Ultraviolet],
+    guaranteedEvidence: null,
     sanity: 50,
     strengths: ['some strength'],
     weaknesses: ['some weakness']
@@ -27,7 +29,7 @@ describe('GhostsContainer', () => {
       selectedFilters: []
     }
 
-    render(<GhostsContainer ghosts={GHOSTS} filters={filters} />)
+    render(<GhostsContainer ghosts={GHOSTS} filters={filters} onGhostCardClick={jest.fn} rejectedGhostNames={[]} />)
 
     expect(screen.getAllByRole('heading').length).toEqual(2)
   })
@@ -38,7 +40,7 @@ describe('GhostsContainer', () => {
       selectedFilters: [Evidence.SpiritBox]
     }
 
-    render(<GhostsContainer ghosts={GHOSTS} filters={filters} />)
+    render(<GhostsContainer ghosts={GHOSTS} filters={filters} onGhostCardClick={jest.fn} rejectedGhostNames={[]} />)
 
     expect(screen.getAllByRole('heading').length).toEqual(1)
   })
@@ -49,7 +51,7 @@ describe('GhostsContainer', () => {
       selectedFilters: []
     }
 
-    render(<GhostsContainer ghosts={GHOSTS} filters={filters} />)
+    render(<GhostsContainer ghosts={GHOSTS} filters={filters} onGhostCardClick={jest.fn} rejectedGhostNames={[]} />)
 
     expect(screen.queryAllByRole('heading').length).toEqual(0)
   })
