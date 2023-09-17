@@ -38,9 +38,18 @@ function App() {
       setRejectedGhostNames(rejectedGhostNames.concat(name))
   }
 
+  const handleReset = () => {
+    setFilters({
+      rejectedFilters: [],
+      selectedFilters: []
+    })
+
+    setRejectedGhostNames([])
+  }
+
   return (
     <div className="app">
-      <h1 className="header">Phasmopedia</h1>
+      <h1 className="header" onClick={handleReset}>Phasmopedia</h1>
       <EvidenceFilter
         filters={filters}
         onFilterChange={handleFilterChange}
