@@ -28,11 +28,11 @@ export const GHOSTS = [
     guaranteedEvidence: null,
     sanity: 70,
     strengths: [
-      'Can initiate hunts more oftens',
+      'Can initiate hunts more often',
       'Can hunt at max sanity'
     ],
     weaknesses: [
-      'Crucifix range is 50% large than placement range indicator'
+      'Crucifix range is 50% larger than placement range indicator'
     ]
   },
   {
@@ -321,6 +321,7 @@ export const GHOSTS = [
     name: 'The Mimic',
     evidences: [
       Evidence.FreezingTemperatures,
+      Evidence.GhostOrb,
       Evidence.SpiritBox,
       Evidence.Ultraviolet
     ],
