@@ -41,13 +41,23 @@ function App() {
     })
   }
 
+  const handleOClick = () => {
+    window.open('https://youtu.be/y1LUYJnGu-M?si=HjydhP5WwsFacuHi&t=30')
+  }
+
   const handleReset = () => {
     dispatch({ type: Action.Reset })
   }
 
   return (
     <div className="app">
-      <h1 className="header" onClick={handleReset}>Phasmopedia</h1>
+      <header>
+        <h1 onClick={handleReset}>
+          Phasm
+          <span data-testid="ooohhhhh" onClick={handleOClick}>o</span>
+          pedia
+        </h1>
+      </header>
       <EvidenceFilter
         filters={filters}
         onFilterChange={handleFilterChange}

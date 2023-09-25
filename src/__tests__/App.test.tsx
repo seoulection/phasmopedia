@@ -9,7 +9,7 @@ describe('App', () => {
   })
 
   test('renders the phasmopedia header', () => {
-    expect(screen.getByText(/phasmopedia/i)).toBeInTheDocument()
+    expect(screen.getByText(/phasm/i)).toBeInTheDocument()
   })
 
   test('renders the evidence filter', () => {
@@ -28,5 +28,13 @@ describe('App', () => {
     await userEvent.click(dots)
 
     expect(screen.getAllByTestId('ghost-card').length).toEqual(10)
+  })
+
+  test('adds OOOOOHHHHHHHHHHHHHHHH easter egg', async () => {
+    window.open = jest.fn();
+
+    await userEvent.click(screen.getByTestId('ooohhhhh'))
+
+    expect(window.open).toHaveBeenCalledWith('https://youtu.be/y1LUYJnGu-M?si=HjydhP5WwsFacuHi&t=30')
   })
 })

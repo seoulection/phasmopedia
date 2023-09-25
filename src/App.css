@@ -1,5 +1,6 @@
 #root {
   text-align: center;
+  max-width: 1250px;
   width: 100vw;
 }
 
@@ -49,6 +50,7 @@
   height: 170px;
   padding: 4px;
   text-align: left;
+  user-select: none;
 
   &.rejected {
     background-color: #202120;
@@ -68,6 +70,11 @@
   .weaknesses {
     color: red;
   }
+}
+
+.ghost-card__attributes {
+  overflow-y: scroll;
+  text-wrap: wrap;
 }
 
 .ghost-card__attributes p {
@@ -97,9 +104,16 @@
   font-size: 14px;
 }
 
-.header {
+header {
+  display: inline-flex;
+  justify-content: center;
+}
+
+header h1 {
+  cursor: pointer;
   grid-area: header;
   margin: 1rem 0;
+  user-select: none;
 }
 
 .indeterminate-checkbox {

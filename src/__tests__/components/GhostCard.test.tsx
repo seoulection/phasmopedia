@@ -93,25 +93,4 @@ describe('GhostCard', () => {
 
     expect(mockFn).toHaveBeenCalledWith('Ghost')
   })
-
-  test('adds onryo easter egg', async () => {
-    window.open = jest.fn()
-
-    const filters = setupFilters()
-
-    const ghost = {
-      name: 'Onryo',
-      evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
-      guaranteedEvidence: null,
-      sanity: 40,
-      strengths: ['some strength'],
-      weaknesses: ['some weakness']
-    }
-
-    render(<GhostCard ghost={ghost} filters={filters} onClick={jest.fn} />)
-
-    await userEvent.click(screen.getByText(/onryo/i))
-
-    expect(window.open).toHaveBeenCalled()
-  })
 })
