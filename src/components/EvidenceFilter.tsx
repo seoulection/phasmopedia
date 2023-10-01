@@ -1,27 +1,23 @@
+import { useContext } from 'react'
+import { FiltersContext, FiltersDispatchContext } from '../contexts/FiltersContext'
 import IndeterminateCheckbox from './IndeterminateCheckbox'
 import Evidence from './Evidence'
-import { CheckboxState, Evidence as EvidenceEnum, Filter } from '../types'
+import { Action, CheckboxState, Evidence as EvidenceEnum } from '../types'
 
-interface IEvidenceFilter {
-  filters: Filter
-  onFilterChange: (evidence: EvidenceEnum, state: CheckboxState) => void
-}
+function EvidenceFilter() {
+  const { rejectedFilters, selectedFilters } = useContext(FiltersContext)
+  const dispatch = useContext(FiltersDispatchContext)
 
-function EvidenceFilter({
-  filters,
-  onFilterChange,
-}: IEvidenceFilter) {
   const createFilter = (evidence: EvidenceEnum) => {
-    const { selectedFilters } = filters
     const isChecked = selectedFilters.includes(evidence)
-    const state = determineState(evidence, filters)
+    const state = determineState(evidence)
 
     return (
       <>
         <IndeterminateCheckbox
           disabled={!isChecked && selectedFilters.length === 3}
           label={evidence}
-          onChange={(state: CheckboxState) => onFilterChange(evidence, state)}
+          onChange={(state: CheckboxState) => handleFilterChange(evidence, state)}
           state={state}
         >
           <Evidence evidence={evidence} />
@@ -31,17 +27,33 @@ function EvidenceFilter({
   }
 
   const determineState = (
-    evidence: EvidenceEnum,
-    filters: Filter
+    evidence: EvidenceEnum
   ) => {
-    const { rejectedFilters, selectedFilters } = filters
-
     if (selectedFilters.includes(evidence)) {
       return CheckboxState.Checked
     } else if (rejectedFilters.includes(evidence)) {
       return CheckboxState.Indeterminate
     } else {
       return CheckboxState.Unchecked
+    }
+  }
+
+  const handleFilterChange = (evidence: EvidenceEnum, state: CheckboxState) => {
+    if (state === CheckboxState.Checked) {
+      dispatch({
+        evidence: evidence,
+        type: Action.FilterSelected
+      })
+    } else if (state === CheckboxState.Indeterminate) {
+      dispatch({
+        evidence: evidence,
+        type: Action.FilterRejected
+      })
+    } else {
+      dispatch({
+        evidence: evidence,
+        type: Action.FilterUnselected
+      })
     }
   }
 

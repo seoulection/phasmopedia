@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import { setupFilters } from '../helpers'
+import { FiltersContext } from '../../contexts/FiltersContext'
 import GhostsContainer from '../../components/GhostsContainer'
 import { Evidence } from '../../types'
+import { INITIAL_FILTERS } from '../../../static/common'
 
 const GHOSTS = [
   {
@@ -25,26 +26,28 @@ const GHOSTS = [
 
 describe('GhostsContainer', () => {
   test('renders ghost card for each ghost', () => {
-    const filters = setupFilters()
-
-    render(<GhostsContainer ghosts={GHOSTS} filters={filters} onGhostCardClick={jest.fn} />)
+    renderWithContext()
 
     expect(screen.getAllByRole('heading').length).toEqual(2)
   })
 
   test('considers selected filters to render ghosts', () => {
-    const filters = setupFilters({ selectedFilters: [Evidence.SpiritBox] })
-
-    render(<GhostsContainer ghosts={GHOSTS} filters={filters} onGhostCardClick={jest.fn} />)
+    renderWithContext({ selectedFilters: [Evidence.SpiritBox] })
 
     expect(screen.getAllByRole('heading').length).toEqual(1)
   })
 
   test('considers rejected filters to render ghosts', () => {
-    const filters = setupFilters({ rejectedFilters: [Evidence.Ultraviolet] })
-
-    render(<GhostsContainer ghosts={GHOSTS} filters={filters} onGhostCardClick={jest.fn} />)
+    renderWithContext({ rejectedFilters: [Evidence.Ultraviolet] })
 
     expect(screen.queryAllByRole('heading').length).toEqual(0)
   })
+
+  function renderWithContext(overrides: object = {}) {
+    render(
+      <FiltersContext.Provider value={{ ...INITIAL_FILTERS, ...overrides }}>
+        <GhostsContainer ghosts={GHOSTS} />
+      </FiltersContext.Provider>
+    )
+  }
 })

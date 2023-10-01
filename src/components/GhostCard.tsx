@@ -1,14 +1,15 @@
+import { useContext } from 'react'
+import { FiltersContext, FiltersDispatchContext } from '../contexts/FiltersContext'
 import Evidence from './Evidence'
-import type { Filter, Ghost } from '../types'
+import { Action, Ghost } from '../types'
 
 interface IGhostCard {
-  filters: Filter
   ghost: Ghost
-  onClick: (name: string) => void
 }
 
-function GhostCard({ filters, ghost, onClick }: IGhostCard) {
-  const { rejectedFilters, rejectedGhosts, selectedFilters } = filters
+function GhostCard({ ghost }: IGhostCard) {
+  const { rejectedFilters, rejectedGhosts, selectedFilters } = useContext(FiltersContext)
+  const dispatch = useContext(FiltersDispatchContext)
   const { name, evidences, guaranteedEvidence, sanity, strengths, weaknesses } = ghost
 
   const buildEvidences = () => {
@@ -24,7 +25,10 @@ function GhostCard({ filters, ghost, onClick }: IGhostCard) {
   }
 
   const handleGhostCardClick = () => {
-    onClick(name)
+    dispatch({
+      name,
+      type: Action.GhostToggled
+    })
   }
 
   const shouldShow = selectedFilters.every(filter => evidences.includes(filter)) &&
