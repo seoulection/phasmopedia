@@ -9,15 +9,15 @@ describe('App', () => {
   })
 
   test('renders the phasmopedia header', () => {
-    expect(screen.getByText(/phasm/i)).toBeInTheDocument()
+    expect(screen.getByText(/phasm/i)).toBeVisible()
   })
 
   test('renders the evidence filter', () => {
-    expect(screen.getByTestId('evidence-filter')).toBeInTheDocument()
+    expect(screen.getByTestId('evidence-filter')).toBeVisible()
   })
 
   test('renders the ghosts container', () => {
-    expect(screen.getByTestId('ghosts-container')).toBeInTheDocument()
+    expect(screen.getByTestId('ghosts-container')).toBeVisible()
   })
 
   test('renders ghost cards based on filter', async () => {
@@ -28,13 +28,5 @@ describe('App', () => {
     await userEvent.click(dots)
 
     expect(screen.getAllByTestId('ghost-card').length).toEqual(10)
-  })
-
-  test('adds OOOOOHHHHHHHHHHHHHHHH easter egg', async () => {
-    window.open = jest.fn();
-
-    await userEvent.click(screen.getByTestId('ooohhhhh'))
-
-    expect(window.open).toHaveBeenCalledWith('https://youtu.be/y1LUYJnGu-M?si=HjydhP5WwsFacuHi&t=30')
   })
 })

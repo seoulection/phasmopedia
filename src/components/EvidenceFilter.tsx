@@ -47,6 +47,7 @@ function EvidenceFilter({
 
   return (
     <div className="evidence-filter" data-testid="evidence-filter">
+      <h3>Evidences:</h3>
       {createFilter(EvidenceEnum.DOTSProjector)}
       {createFilter(EvidenceEnum.EMFLevelFive)}
       {createFilter(EvidenceEnum.FreezingTemperatures)}

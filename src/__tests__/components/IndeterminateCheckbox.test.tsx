@@ -17,10 +17,10 @@ describe('IndeterminateCheckbox', () => {
 
     const checkbox = screen.getByRole('checkbox') as HTMLInputElement
 
-    expect(checkbox).toBeInTheDocument()
+    expect(checkbox).toBeVisible()
     expect(checkbox.checked).toEqual(false)
     expect(checkbox.indeterminate).toEqual(false)
-    expect(screen.getByText(/hi/i)).toBeInTheDocument()
+    expect(screen.getByText(/hi/i)).toBeVisible()
   })
 
   test('renders children', () => {
@@ -35,7 +35,7 @@ describe('IndeterminateCheckbox', () => {
       </IndeterminateCheckbox>
     )
 
-    expect(screen.getByText(/hello world/i)).toBeInTheDocument()
+    expect(screen.getByText(/hello world/i)).toBeVisible()
   })
 
   test('renders a disabled checkbox', () => {

@@ -11,13 +11,15 @@ describe('EvidenceFilter', () => {
 
     render(<EvidenceFilter onFilterChange={jest.fn} filters={filters} />)
 
-    expect(screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i })).toBeInTheDocument()
-    expect(screen.getByRole('checkbox', { name: /EMF Level 5/i })).toBeInTheDocument()
-    expect(screen.getByRole('checkbox', { name: /Freezing Temperatures/i })).toBeInTheDocument()
-    expect(screen.getByRole('checkbox', { name: /Ghost Orb/i })).toBeInTheDocument()
-    expect(screen.getByRole('checkbox', { name: /Ghost Writing/i })).toBeInTheDocument()
-    expect(screen.getByRole('checkbox', { name: /Spirit Box/i })).toBeInTheDocument()
-    expect(screen.getByRole('checkbox', { name: /Ultraviolet/i })).toBeInTheDocument()
+    expect(screen.getByText(/evidences:/i)).toBeVisible()
+
+    expect(screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i })).toBeVisible()
+    expect(screen.getByRole('checkbox', { name: /EMF Level 5/i })).toBeVisible()
+    expect(screen.getByRole('checkbox', { name: /Freezing Temperatures/i })).toBeVisible()
+    expect(screen.getByRole('checkbox', { name: /Ghost Orb/i })).toBeVisible()
+    expect(screen.getByRole('checkbox', { name: /Ghost Writing/i })).toBeVisible()
+    expect(screen.getByRole('checkbox', { name: /Spirit Box/i })).toBeVisible()
+    expect(screen.getByRole('checkbox', { name: /Ultraviolet/i })).toBeVisible()
   })
 
   test('renders a checked checkbox if evidence is in selected filters', () => {

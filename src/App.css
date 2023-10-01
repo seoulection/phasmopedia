@@ -2,15 +2,21 @@
   text-align: center;
   max-width: 1250px;
   width: 100vw;
+  user-select: none;
 }
 
 .app {
   display: grid;
   grid-template-areas:
   "header"
-  "evidence-filter"
-  "ghosts-container";
-  grid-template-rows: 1fr auto;
+  "container";
+}
+
+section {
+  display: grid;
+  grid-area: container;
+  grid-template-areas:
+  "evidence ghosts";
 }
 
 .evidence {
@@ -26,14 +32,14 @@
 
 .evidence-filter {
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  grid-area: evidence-filter;
+  align-items: flex-start;
+  flex-direction: column;
+  grid-area: evidence;
 }
 
 .ghosts-container {
   display: grid;
-  grid-area: ghosts-container;
+  grid-area: ghosts;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 4px;
   padding: 24px;
@@ -50,7 +56,6 @@
   height: 170px;
   padding: 4px;
   text-align: left;
-  user-select: none;
 
   &.rejected {
     background-color: #202120;
@@ -68,7 +73,7 @@
   }
 
   .weaknesses {
-    color: red;
+    color: orange;
   }
 }
 
@@ -106,18 +111,22 @@
 
 header {
   display: inline-flex;
+  grid-area: header;
   justify-content: center;
 }
 
 header h1 {
   cursor: pointer;
-  grid-area: header;
   margin: 1rem 0;
-  user-select: none;
 }
 
 .indeterminate-checkbox {
   display: flex;
-  flex-direction: column-reverse;
   align-items: center;
+  justify-content: center;
+}
+
+.indeterminate-checkbox input,
+.indeterminate-checkbox input + .evidence {
+  margin-right: 8px;
 }

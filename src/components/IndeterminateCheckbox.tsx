@@ -43,16 +43,14 @@ function IndeterminateCheckbox({ children, disabled, label, onChange, state }: I
 
   return (
     <label className="indeterminate-checkbox">
-      <div>
-        <input
-          disabled={disabled}
-          ref={checkboxRef}
-          type="checkbox"
-          onChange={handleChange}
-        />
-        {label}
-      </div>
+      <input
+        disabled={disabled}
+        ref={checkboxRef}
+        type="checkbox"
+        onChange={handleChange}
+      />
       {children}
+      {label}
     </label>
   )
 }
