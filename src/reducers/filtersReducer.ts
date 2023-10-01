@@ -2,28 +2,48 @@ import { Action, Filter } from '../types'
 
 // eslint-disable-next-line
 function filtersReducer(filters: Filter, action: any): Filter {
-  const { rejectedFilters, rejectedGhosts, selectedFilters } = filters
+  const { rejectedEvidences, rejectedGhosts, selectedEvidences } = filters
 
   switch (action.type) {
-    case Action.FilterRejected: {
+    case Action.EvidenceRejected: {
       return {
         ...filters,
-        rejectedFilters: rejectedFilters.concat(action.evidence),
-        selectedFilters: selectedFilters.filter(filter => filter !== action.evidence)
+        rejectedEvidences: rejectedEvidences.concat(action.evidence),
+        selectedEvidences: selectedEvidences.filter(filter => filter !== action.evidence)
       }
     }
 
-    case Action.FilterSelected: {
+    case Action.EvidenceSelected: {
       return {
         ...filters,
-        selectedFilters: selectedFilters.concat(action.evidence)
+        selectedEvidences: selectedEvidences.concat(action.evidence)
       }
     }
 
-    case Action.FilterUnselected: {
+    case Action.EvidenceUnselected: {
       return {
         ...filters,
-        rejectedFilters: rejectedFilters.filter(filter => filter !== action.evidence)
+        rejectedEvidences: rejectedEvidences.filter(filter => filter !== action.evidence)
+      }
+    }
+
+    case Action.FastRejected: {
+      return {
+        ...filters,
+        isFast: false
+      }
+    }
+
+    case Action.FastSelected: {
+      return {
+        ...filters,
+        isFast: true
+      }
+    }
+    case Action.FastUnselected: {
+      return {
+        ...filters,
+        isFast: null
       }
     }
 
@@ -40,9 +60,10 @@ function filtersReducer(filters: Filter, action: any): Filter {
 
     case Action.Reset: {
       return {
-        rejectedFilters: [],
+        isFast: null,
+        rejectedEvidences: [],
         rejectedGhosts: [],
-        selectedFilters: []
+        selectedEvidences: []
       }
     }
 

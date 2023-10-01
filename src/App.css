@@ -16,7 +16,7 @@ section {
   display: grid;
   grid-area: container;
   grid-template-areas:
-  "evidence ghosts";
+  "filters ghosts";
 }
 
 .evidence {
@@ -30,11 +30,15 @@ section {
   margin-top: 4px;
 }
 
-.evidence-filter {
+.filters {
+  grid-area: filters;
+}
+
+.evidence-filter,
+.speed-filter {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  grid-area: evidence;
 }
 
 .ghosts-container {
@@ -52,7 +56,6 @@ section {
   grid-gap: 1em;
   grid-template-areas:
   "info attributes";
-  grid-template-columns: 1fr 2fr;
   height: 170px;
   padding: 4px;
   text-align: left;

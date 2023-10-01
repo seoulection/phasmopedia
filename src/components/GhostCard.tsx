@@ -8,9 +8,9 @@ interface IGhostCard {
 }
 
 function GhostCard({ ghost }: IGhostCard) {
-  const { rejectedFilters, rejectedGhosts, selectedFilters } = useContext(FiltersContext)
+  const { isFast, rejectedEvidences, rejectedGhosts, selectedEvidences } = useContext(FiltersContext)
   const dispatch = useContext(FiltersDispatchContext)
-  const { name, evidences, guaranteedEvidence, sanity, strengths, weaknesses } = ghost
+  const { name, evidences, guaranteedEvidence, isFast: isGhostFast, sanity, strengths, weaknesses } = ghost
 
   const buildEvidences = () => {
     return evidences.map((evidence) => {
@@ -24,6 +24,18 @@ function GhostCard({ ghost }: IGhostCard) {
     })
   }
 
+  const checkSpeed = () => {
+    if (isFast === null) {
+      return true
+    } else if (isFast && isGhostFast) {
+      return true
+    } else if (!isFast && !isGhostFast) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   const handleGhostCardClick = () => {
     dispatch({
       name,
@@ -31,8 +43,9 @@ function GhostCard({ ghost }: IGhostCard) {
     })
   }
 
-  const shouldShow = selectedFilters.every(filter => evidences.includes(filter)) &&
-    !rejectedFilters.some(filter => evidences.includes(filter))
+  const shouldShow = selectedEvidences.every(filter => evidences.includes(filter)) &&
+    !rejectedEvidences.some(filter => evidences.includes(filter)) &&
+    (name === 'The Mimic' || checkSpeed())
 
   if (!shouldShow) return
 

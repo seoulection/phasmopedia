@@ -24,7 +24,7 @@ describe('EvidenceFilter', () => {
   })
 
   test('renders a checked checkbox if evidence is in selected filters', () => {
-    renderWithContexts({ selectedFilters: [Evidence.Ultraviolet] })
+    renderWithContexts({ selectedEvidences: [Evidence.Ultraviolet] })
 
     const uv = screen.getByRole('checkbox', { name: /Ultraviolet/i }) as HTMLInputElement
     const dots = screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }) as HTMLInputElement
@@ -34,7 +34,7 @@ describe('EvidenceFilter', () => {
   })
 
   test('renders an indeterminate checkbox if evidence is in rejected filters', () => {
-    renderWithContexts({ rejectedFilters: [Evidence.DOTSProjector] })
+    renderWithContexts({ rejectedEvidences: [Evidence.DOTSProjector] })
 
     const dots = screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }) as HTMLInputElement
 
@@ -48,35 +48,35 @@ describe('EvidenceFilter', () => {
 
     expect(dispatchHandler).toHaveBeenCalledWith({
       evidence: Evidence.DOTSProjector,
-      type: Action.FilterSelected
+      type: Action.EvidenceSelected
     })
   })
 
   test('clicking on a checked checkbox calls filter rejected dispatch', async () => {
-    renderWithContexts({ selectedFilters: [Evidence.DOTSProjector] })
+    renderWithContexts({ selectedEvidences: [Evidence.DOTSProjector] })
 
     await userEvent.click(screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }))
 
     expect(dispatchHandler).toHaveBeenCalledWith({
       evidence: Evidence.DOTSProjector,
-      type: Action.FilterRejected
+      type: Action.EvidenceRejected
     })
   })
 
   test('clicking on an indeterminate checkbox calls filter unselected dispatch', async () => {
-    renderWithContexts({ rejectedFilters: [Evidence.DOTSProjector] })
+    renderWithContexts({ rejectedEvidences: [Evidence.DOTSProjector] })
 
     await userEvent.click(screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }))
 
     expect(dispatchHandler).toHaveBeenCalledWith({
       evidence: Evidence.DOTSProjector,
-      type: Action.FilterUnselected
+      type: Action.EvidenceUnselected
     })
   })
 
   test('disables non-checked checkboxes if there are three selected filters', () => {
     renderWithContexts({
-      selectedFilters: [Evidence.DOTSProjector, Evidence.EMFLevelFive, Evidence.FreezingTemperatures]
+      selectedEvidences: [Evidence.DOTSProjector, Evidence.EMFLevelFive, Evidence.FreezingTemperatures]
     })
 
     const dots = screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }) as HTMLInputElement

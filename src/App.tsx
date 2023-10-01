@@ -2,6 +2,7 @@ import { useReducer } from 'react'
 import { FiltersContext, FiltersDispatchContext } from './contexts/FiltersContext'
 import filtersReducer from './reducers/filtersReducer'
 import EvidenceFilter from './components/EvidenceFilter'
+import SpeedFilter from './components/SpeedFilter'
 import GhostsContainer from './components/GhostsContainer'
 import { INITIAL_FILTERS } from '../static/common'
 import { GHOSTS } from '../static/ghosts'
@@ -22,7 +23,10 @@ function App() {
           </header>
           <section className="container">
             <GhostsContainer ghosts={GHOSTS} />
-            <EvidenceFilter />
+            <aside className="filters">
+              <EvidenceFilter />
+              <SpeedFilter />
+            </aside>
           </section>
         </div>
       </FiltersDispatchContext.Provider>

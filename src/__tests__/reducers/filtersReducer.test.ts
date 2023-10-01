@@ -5,34 +5,67 @@ import { Action, Evidence } from '../../types'
 describe('filtersReducer', () => {
   test('adds to selected filters', () => {
     const filters = setupFilters()
-    const action = { evidence: Evidence.DOTSProjector, type: Action.FilterSelected }
+    const action = { evidence: Evidence.DOTSProjector, type: Action.EvidenceSelected }
 
-    const { selectedFilters } = filtersReducer(filters, action)
+    const { selectedEvidences } = filtersReducer(filters, action)
 
-    expect(selectedFilters.includes(Evidence.DOTSProjector)).toEqual(true)
+    expect(selectedEvidences.includes(Evidence.DOTSProjector)).toEqual(true)
   })
 
   test('moves from selected filters to rejected filters', () => {
     const filters = setupFilters({
-      selectedFilters: [Evidence.GhostOrb]
+      selectedEvidences: [Evidence.GhostOrb]
     })
-    const action = { evidence: Evidence.GhostOrb, type: Action.FilterRejected }
+    const action = { evidence: Evidence.GhostOrb, type: Action.EvidenceRejected }
 
-    const { rejectedFilters, selectedFilters } = filtersReducer(filters, action)
+    const { rejectedEvidences, selectedEvidences } = filtersReducer(filters, action)
 
-    expect(selectedFilters.includes(Evidence.GhostOrb)).toEqual(false)
-    expect(rejectedFilters.includes(Evidence.GhostOrb)).toEqual(true)
+    expect(selectedEvidences.includes(Evidence.GhostOrb)).toEqual(false)
+    expect(rejectedEvidences.includes(Evidence.GhostOrb)).toEqual(true)
   })
 
   test('removes from rejected filters', () => {
     const filters = setupFilters({
-      rejectedFilters: [Evidence.GhostWriting]
+      rejectedEvidences: [Evidence.GhostWriting]
     })
-    const action = { evidence: Evidence.GhostWriting, type: Action.FilterUnselected }
+    const action = { evidence: Evidence.GhostWriting, type: Action.EvidenceUnselected }
 
-    const { rejectedFilters } = filtersReducer(filters, action)
+    const { rejectedEvidences } = filtersReducer(filters, action)
 
-    expect(rejectedFilters.includes(Evidence.GhostWriting)).toEqual(false)
+    expect(rejectedEvidences.includes(Evidence.GhostWriting)).toEqual(false)
+  })
+
+  test('sets isFast to true', () => {
+    const filters = setupFilters({
+      isFast: null
+    })
+    const action = { type: Action.FastSelected }
+
+    const { isFast } = filtersReducer(filters, action)
+
+    expect(isFast).toEqual(true)
+  })
+
+  test('sets isFast to false', () => {
+    const filters = setupFilters({
+      isFast: true
+    })
+    const action = { type: Action.FastRejected }
+
+    const { isFast } = filtersReducer(filters, action)
+
+    expect(isFast).toEqual(false)
+  })
+
+  test('sets isFast to null', () => {
+    const filters = setupFilters({
+      isFast: false
+    })
+    const action = { type: Action.FastUnselected }
+
+    const { isFast } = filtersReducer(filters, action)
+
+    expect(isFast).toEqual(null)
   })
 
   test('toggles ghost name for rejected ghosts', () => {
@@ -56,9 +89,10 @@ describe('filtersReducer', () => {
 
   test('resets filters', () => {
     const filters = {
-      rejectedFilters: [Evidence.GhostOrb],
+      isFast: true,
+      rejectedEvidences: [Evidence.GhostOrb],
       rejectedGhosts: ['some rejected ghost'],
-      selectedFilters: [Evidence.SpiritBox]
+      selectedEvidences: [Evidence.SpiritBox]
     }
 
     const action = { type: Action.Reset }
@@ -66,9 +100,10 @@ describe('filtersReducer', () => {
     const reducer = filtersReducer(filters, action)
 
     expect(reducer).toEqual({
-      rejectedFilters: [],
+      isFast: null,
+      rejectedEvidences: [],
       rejectedGhosts: [],
-      selectedFilters: []
+      selectedEvidences: []
     })
   })
 })

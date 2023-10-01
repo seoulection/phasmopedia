@@ -2,9 +2,10 @@ import type { Filter } from '../types'
 
 export function setupFilters(overrides: object = {}): Filter {
   return {
-    rejectedFilters: [],
+    isFast: null,
+    rejectedEvidences: [],
     rejectedGhosts: [],
-    selectedFilters: [],
+    selectedEvidences: [],
     ...overrides
   }
 }

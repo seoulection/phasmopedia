@@ -5,33 +5,31 @@ import Evidence from './Evidence'
 import { Action, CheckboxState, Evidence as EvidenceEnum } from '../types'
 
 function EvidenceFilter() {
-  const { rejectedFilters, selectedFilters } = useContext(FiltersContext)
+  const { rejectedEvidences, selectedEvidences } = useContext(FiltersContext)
   const dispatch = useContext(FiltersDispatchContext)
 
   const createFilter = (evidence: EvidenceEnum) => {
-    const isChecked = selectedFilters.includes(evidence)
+    const isChecked = selectedEvidences.includes(evidence)
     const state = determineState(evidence)
 
     return (
-      <>
-        <IndeterminateCheckbox
-          disabled={!isChecked && selectedFilters.length === 3}
-          label={evidence}
-          onChange={(state: CheckboxState) => handleFilterChange(evidence, state)}
-          state={state}
-        >
-          <Evidence evidence={evidence} />
-        </IndeterminateCheckbox>
-      </>
+      <IndeterminateCheckbox
+        disabled={!isChecked && selectedEvidences.length === 3}
+        label={evidence}
+        onChange={(state: CheckboxState) => handleFilterChange(evidence, state)}
+        state={state}
+      >
+        <Evidence evidence={evidence} />
+      </IndeterminateCheckbox>
     )
   }
 
   const determineState = (
     evidence: EvidenceEnum
   ) => {
-    if (selectedFilters.includes(evidence)) {
+    if (selectedEvidences.includes(evidence)) {
       return CheckboxState.Checked
-    } else if (rejectedFilters.includes(evidence)) {
+    } else if (rejectedEvidences.includes(evidence)) {
       return CheckboxState.Indeterminate
     } else {
       return CheckboxState.Unchecked
@@ -42,17 +40,17 @@ function EvidenceFilter() {
     if (state === CheckboxState.Checked) {
       dispatch({
         evidence: evidence,
-        type: Action.FilterSelected
+        type: Action.EvidenceSelected
       })
     } else if (state === CheckboxState.Indeterminate) {
       dispatch({
         evidence: evidence,
-        type: Action.FilterRejected
+        type: Action.EvidenceRejected
       })
     } else {
       dispatch({
         evidence: evidence,
-        type: Action.FilterUnselected
+        type: Action.EvidenceUnselected
       })
     }
   }

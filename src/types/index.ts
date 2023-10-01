@@ -1,7 +1,10 @@
 export enum Action {
-  FilterRejected,
-  FilterSelected,
-  FilterUnselected,
+  EvidenceRejected,
+  EvidenceSelected,
+  EvidenceUnselected,
+  FastRejected,
+  FastSelected,
+  FastUnselected,
   GhostToggled,
   Reset
 }
@@ -23,15 +26,17 @@ export enum Evidence {
 }
 
 export type Filter = {
-  rejectedFilters: Evidence[]
+  isFast: boolean | null
+  rejectedEvidences: Evidence[]
   rejectedGhosts: string[]
-  selectedFilters: Evidence[]
+  selectedEvidences: Evidence[]
 }
 
 export type Ghost = {
   name: string
   evidences: Evidence[]
   guaranteedEvidence: Evidence | null
+  isFast: boolean | null
   sanity: number
   strengths: string[]
   weaknesses: string[]
