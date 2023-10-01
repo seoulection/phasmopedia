@@ -20,13 +20,13 @@ describe('GhostCard', () => {
 
     render(<GhostCard ghost={ghost} filters={filters} onClick={jest.fn} />)
 
-    expect(screen.getByText(ghost.name)).toBeInTheDocument()
-    expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeInTheDocument()
-    expect(screen.getByText(/some strength/i)).toBeInTheDocument()
-    expect(screen.getByText(/some weakness/i)).toBeInTheDocument()
+    expect(screen.getByText(ghost.name)).toBeVisible()
+    expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeVisible()
+    expect(screen.getByText(/some strength/i)).toBeVisible()
+    expect(screen.getByText(/some weakness/i)).toBeVisible()
 
     ghost.evidences.forEach((evidence) => {
-      expect(screen.getByRole('img', { name: evidence })).toBeInTheDocument()
+      expect(screen.getByRole('img', { name: evidence })).toBeVisible()
     })
   })
 

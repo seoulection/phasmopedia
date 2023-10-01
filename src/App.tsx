@@ -41,32 +41,28 @@ function App() {
     })
   }
 
-  const handleOClick = () => {
-    window.open('https://youtu.be/y1LUYJnGu-M?si=HjydhP5WwsFacuHi&t=30')
-  }
-
   const handleReset = () => {
     dispatch({ type: Action.Reset })
   }
 
   return (
     <div className="app">
-      <header>
+      <header className="header">
         <h1 onClick={handleReset}>
-          Phasm
-          <span data-testid="ooohhhhh" onClick={handleOClick}>o</span>
-          pedia
+          Phasmopedia
         </h1>
       </header>
-      <EvidenceFilter
-        filters={filters}
-        onFilterChange={handleFilterChange}
-      />
-      <GhostsContainer
-        ghosts={GHOSTS}
-        filters={filters}
-        onGhostCardClick={handleGhostCardClick}
-      />
+      <section className="container">
+        <GhostsContainer
+          ghosts={GHOSTS}
+          filters={filters}
+          onGhostCardClick={handleGhostCardClick}
+        />
+        <EvidenceFilter
+          filters={filters}
+          onFilterChange={handleFilterChange}
+        />
+      </section>
     </div>
   )
 }
