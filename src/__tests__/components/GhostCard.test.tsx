@@ -1,15 +1,16 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { setupFilters } from '../helpers'
+import { FiltersContext, FiltersDispatchContext } from '../../contexts/FiltersContext'
 import GhostCard from '../../components/GhostCard'
-import { Evidence } from '../../types'
+import { Action, Evidence, Ghost } from '../../types'
+import { INITIAL_FILTERS } from '../../../static/common'
 
 describe('GhostCard', () => {
-  test('renders ghost card', () => {
-    const filters = setupFilters()
+  const dispatchHandler = jest.fn();
 
-    const ghost = {
+  test('renders ghost card', () => {
+    const ghost: Ghost = {
       name: 'Ghost',
       evidences: [Evidence.GhostOrb, Evidence.GhostWriting, Evidence.Ultraviolet],
       guaranteedEvidence: null,
@@ -18,7 +19,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} onClick={jest.fn} />)
+    renderWithContexts(ghost)
 
     expect(screen.getByText(ghost.name)).toBeVisible()
     expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeVisible()
@@ -31,9 +32,7 @@ describe('GhostCard', () => {
   })
 
   test("does not render ghost card if evidences are not in selected filters", () => {
-    const filters = setupFilters({ selectedFilters: [Evidence.Ultraviolet] })
-
-    const ghost = {
+    const ghost: Ghost = {
       name: 'Ghost',
       evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.GhostWriting],
       guaranteedEvidence: null,
@@ -42,7 +41,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} onClick={jest.fn}/>)
+    renderWithContexts(ghost, { selectedFilters: [Evidence.Ultraviolet] })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -52,9 +51,6 @@ describe('GhostCard', () => {
   })
 
   test("does not render ghost card if evidences are in rejected filters", () => {
-    const filters = setupFilters({ rejectedFilters: [Evidence.Ultraviolet] })
-
-
     const ghost = {
       name: 'Ghost',
       evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
@@ -64,7 +60,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} onClick={jest.fn} />)
+    renderWithContexts(ghost, { rejectedFilters: [Evidence.Ultraviolet] })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -73,12 +69,8 @@ describe('GhostCard', () => {
     expect(screen.queryByText(/some weakness/i)).toBeNull()
   })
 
-  test('calls props onClick handler when ghost card is clicked', async () => {
-    const mockFn = jest.fn()
-
-    const filters = setupFilters()
-
-    const ghost = {
+  test('calls ghost toggled dispatch when ghost card is clicked', async () => {
+    const ghost: Ghost = {
       name: 'Ghost',
       evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
       guaranteedEvidence: null,
@@ -87,10 +79,20 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness']
     }
 
-    render(<GhostCard ghost={ghost} filters={filters} onClick={mockFn} />)
+    renderWithContexts(ghost)
 
     await userEvent.click(screen.getByTestId('ghost-card'))
 
-    expect(mockFn).toHaveBeenCalledWith('Ghost')
+    expect(dispatchHandler).toHaveBeenCalledWith({ name: 'Ghost', type: Action.GhostToggled })
   })
+
+  function renderWithContexts(ghost: Ghost, overrides: object = {}) {
+    render(
+      <FiltersContext.Provider value={{ ...INITIAL_FILTERS, ...overrides }}>
+        <FiltersDispatchContext.Provider value={dispatchHandler}>
+          <GhostCard ghost={ghost} />
+        </FiltersDispatchContext.Provider>
+      </FiltersContext.Provider>
+    )
+  }
 })

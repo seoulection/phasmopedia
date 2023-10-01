@@ -1,15 +1,16 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { setupFilters } from '../helpers'
+import { FiltersContext, FiltersDispatchContext } from '../../contexts/FiltersContext'
 import EvidenceFilter from '../../components/EvidenceFilter'
-import { Evidence } from '../../types'
+import { Action, Evidence } from '../../types'
+import { INITIAL_FILTERS } from '../../../static/common'
 
 describe('EvidenceFilter', () => {
-  test('creates checkboxes for each evidence', () => {
-    const filters = setupFilters()
+  const dispatchHandler = jest.fn();
 
-    render(<EvidenceFilter onFilterChange={jest.fn} filters={filters} />)
+  test('creates checkboxes for each evidence', () => {
+    renderWithContexts()
 
     expect(screen.getByText(/evidences:/i)).toBeVisible()
 
@@ -23,9 +24,7 @@ describe('EvidenceFilter', () => {
   })
 
   test('renders a checked checkbox if evidence is in selected filters', () => {
-    const filters = setupFilters({ selectedFilters: [Evidence.Ultraviolet] })
-
-    render(<EvidenceFilter onFilterChange={jest.fn} filters={filters} />)
+    renderWithContexts({ selectedFilters: [Evidence.Ultraviolet] })
 
     const uv = screen.getByRole('checkbox', { name: /Ultraviolet/i }) as HTMLInputElement
     const dots = screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }) as HTMLInputElement
@@ -35,32 +34,50 @@ describe('EvidenceFilter', () => {
   })
 
   test('renders an indeterminate checkbox if evidence is in rejected filters', () => {
-    const filters = setupFilters({ rejectedFilters: [Evidence.DOTSProjector] })
-
-    render(<EvidenceFilter onFilterChange={jest.fn} filters={filters} />)
+    renderWithContexts({ rejectedFilters: [Evidence.DOTSProjector] })
 
     const dots = screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }) as HTMLInputElement
 
     expect(dots.indeterminate).toEqual(true)
   })
 
-  test('clicking on a non-disabled checkbox calls onFilterChange', async () => {
-    const mockFn = jest.fn()
-    const filters = setupFilters()
-
-    render(<EvidenceFilter onFilterChange={mockFn} filters={filters} />)
+  test('clicking on an unchecked checkbox calls filter selected dispatch', async () => {
+    renderWithContexts()
 
     await userEvent.click(screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }))
 
-    expect(mockFn).toHaveBeenCalled()
+    expect(dispatchHandler).toHaveBeenCalledWith({
+      evidence: Evidence.DOTSProjector,
+      type: Action.FilterSelected
+    })
+  })
+
+  test('clicking on a checked checkbox calls filter rejected dispatch', async () => {
+    renderWithContexts({ selectedFilters: [Evidence.DOTSProjector] })
+
+    await userEvent.click(screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }))
+
+    expect(dispatchHandler).toHaveBeenCalledWith({
+      evidence: Evidence.DOTSProjector,
+      type: Action.FilterRejected
+    })
+  })
+
+  test('clicking on an indeterminate checkbox calls filter unselected dispatch', async () => {
+    renderWithContexts({ rejectedFilters: [Evidence.DOTSProjector] })
+
+    await userEvent.click(screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }))
+
+    expect(dispatchHandler).toHaveBeenCalledWith({
+      evidence: Evidence.DOTSProjector,
+      type: Action.FilterUnselected
+    })
   })
 
   test('disables non-checked checkboxes if there are three selected filters', () => {
-    const filters = setupFilters({
+    renderWithContexts({
       selectedFilters: [Evidence.DOTSProjector, Evidence.EMFLevelFive, Evidence.FreezingTemperatures]
     })
-
-    render(<EvidenceFilter onFilterChange={jest.fn} filters={filters} />)
 
     const dots = screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }) as HTMLInputElement
     const emf = screen.getByRole('checkbox', { name: /EMF Level 5/i }) as HTMLInputElement
@@ -80,4 +97,14 @@ describe('EvidenceFilter', () => {
       }
     })
   })
+
+  function renderWithContexts(overrides: object = {}) {
+    render(
+      <FiltersContext.Provider value={{ ...INITIAL_FILTERS, ...overrides }}>
+        <FiltersDispatchContext.Provider value={dispatchHandler}>
+          <EvidenceFilter />
+        </FiltersDispatchContext.Provider>
+      </FiltersContext.Provider>
+    )
+  }
 })
