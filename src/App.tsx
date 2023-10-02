@@ -3,13 +3,12 @@ import {
   FiltersContext,
   FiltersDispatchContext,
 } from './contexts/FiltersContext'
-import filtersReducer from './reducers/filtersReducer'
-import EvidenceFilter from './components/EvidenceFilter'
-import SpeedFilter from './components/SpeedFilter'
-import GhostsContainer from './components/GhostsContainer'
-import { INITIAL_FILTERS } from '../static/common'
-import { GHOSTS } from '../static/ghosts'
-import { Action } from './types'
+import filtersReducer from '@/reducers/filtersReducer'
+import EvidenceFilter from '@/components/EvidenceFilter'
+import { GhostsContainer, SpeedFilter } from '@/components'
+import { INITIAL_FILTERS } from '@static/common'
+import { GHOSTS } from '@static/ghosts'
+import { Action } from '@/types'
 import './App.css'
 
 function App() {

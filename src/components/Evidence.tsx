@@ -1,4 +1,4 @@
-import { Evidence as EvidenceEnum } from '../types'
+import { Evidence as EvidenceEnum } from '@/types'
 import bookImg from '/book.png'
 import dotsImg from '/dots.png'
 import emfImg from '/emf.png'

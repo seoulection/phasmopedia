@@ -3,8 +3,8 @@ import { render } from '@testing-library/react'
 import {
   FiltersContext,
   FiltersDispatchContext,
-} from '../contexts/FiltersContext'
-import { INITIAL_FILTERS } from '../../static/common'
+} from '@/contexts/FiltersContext'
+import { INITIAL_FILTERS } from '@static/common'
 
 type Overrides = {
   dispatchHandler?: () => void

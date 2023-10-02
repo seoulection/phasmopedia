@@ -2,10 +2,10 @@ import { useContext } from 'react'
 import {
   FiltersContext,
   FiltersDispatchContext,
-} from '../contexts/FiltersContext'
+} from '@/contexts/FiltersContext'
 import IndeterminateCheckbox from './IndeterminateCheckbox'
 import Evidence from './Evidence'
-import { Action, CheckboxState, Evidence as EvidenceEnum } from '../types'
+import { Action, CheckboxState, Evidence as EvidenceEnum } from '@/types'
 
 function EvidenceFilter() {
   const { rejectedEvidences, selectedEvidences } = useContext(FiltersContext)

@@ -1,4 +1,4 @@
-import type { Ghost } from '../types'
+import type { Ghost } from '@/types'
 import GhostCard from './GhostCard'
 
 interface IGhostsContainer {

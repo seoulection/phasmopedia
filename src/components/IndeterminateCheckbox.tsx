@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { CheckboxState } from '../types'
+import { CheckboxState } from '@/types'
 
 interface IIndeterminateCheckbox {
   disabled: boolean
