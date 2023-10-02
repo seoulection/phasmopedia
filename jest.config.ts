@@ -8,7 +8,7 @@ const config: Config = {
   },
   testPathIgnorePatterns: [
     '/node_modules/',
-    '<rootDir>/src/__tests__/helpers.ts',
+    '<rootDir>/src/__tests__/test-utils.tsx',
   ],
   transform: {
     '\\.[jt]sx?$': 'ts-jest',

@@ -1,13 +1,8 @@
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import { contextRender, screen } from '../test-utils'
 import userEvent from '@testing-library/user-event'
-import {
-  FiltersContext,
-  FiltersDispatchContext,
-} from '../../contexts/FiltersContext'
 import GhostCard from '../../components/GhostCard'
 import { Action, Evidence, Ghost } from '../../types'
-import { INITIAL_FILTERS } from '../../../static/common'
 
 describe('GhostCard', () => {
   const dispatchHandler = jest.fn()
@@ -27,7 +22,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    renderWithContexts(ghost)
+    contextRender(<GhostCard ghost={ghost} />)
 
     expect(screen.getByText(ghost.name)).toBeVisible()
     expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeVisible()
@@ -54,7 +49,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    renderWithContexts(ghost, { selectedEvidences: [Evidence.Ultraviolet] })
+    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { selectedEvidences: [Evidence.Ultraviolet] } })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -78,7 +73,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    renderWithContexts(ghost, { rejectedEvidences: [Evidence.Ultraviolet] })
+    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { rejectedEvidences: [Evidence.Ultraviolet] } })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -87,7 +82,7 @@ describe('GhostCard', () => {
     expect(screen.queryByText(/some weakness/i)).toBeNull()
   })
 
-  test('calls ghost toggled dispatch when ghost card is clicked', async () => {
+  test('calls ghost toggle dispatch when ghost card is clicked', async () => {
     const ghost: Ghost = {
       name: 'Ghost',
       evidences: [
@@ -102,7 +97,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    renderWithContexts(ghost)
+    contextRender(<GhostCard ghost={ghost} />, { dispatchHandler })
 
     await userEvent.click(screen.getByTestId('ghost-card'))
 
@@ -127,7 +122,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    renderWithContexts(ghost, { isFast: true })
+    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { isFast: true } })
 
     expect(screen.getByText(ghost.name)).toBeVisible()
     expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeVisible()
@@ -154,7 +149,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    renderWithContexts(ghost, { isFast: true })
+    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { isFast: true } })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -178,7 +173,7 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    renderWithContexts(ghost, { isFast: false })
+    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { isFast: false } })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -203,7 +198,7 @@ describe('GhostCard', () => {
         weaknesses: ['some weakness'],
       }
 
-      const { unmount } = renderWithContexts(ghost, { isFast: null })
+      const { unmount } = contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { isFast: null } })
 
       expect(screen.getByText(ghost.name)).toBeVisible()
       expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeVisible()
@@ -217,14 +212,4 @@ describe('GhostCard', () => {
       unmount()
     })
   })
-
-  function renderWithContexts(ghost: Ghost, overrides: object = {}) {
-    return render(
-      <FiltersContext.Provider value={{ ...INITIAL_FILTERS, ...overrides }}>
-        <FiltersDispatchContext.Provider value={dispatchHandler}>
-          <GhostCard ghost={ghost} />
-        </FiltersDispatchContext.Provider>
-      </FiltersContext.Provider>,
-    )
-  }
 })
