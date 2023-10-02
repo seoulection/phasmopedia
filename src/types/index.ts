@@ -6,13 +6,13 @@ export enum Action {
   FastSelected,
   FastUnselected,
   GhostToggled,
-  Reset
+  Reset,
 }
 
 export enum CheckboxState {
   Checked = 'Checked',
   Indeterminate = 'Indeterminate',
-  Unchecked = 'Unchecked'
+  Unchecked = 'Unchecked',
 }
 
 export enum Evidence {
@@ -22,7 +22,7 @@ export enum Evidence {
   GhostOrb = 'Ghost Orb',
   GhostWriting = 'Ghost Writing',
   SpiritBox = 'Spirit Box',
-  Ultraviolet = 'Ultraviolet'
+  Ultraviolet = 'Ultraviolet',
 }
 
 export type Filter = {

@@ -1,6 +1,9 @@
 import { useContext } from 'react'
 import IndeterminateCheckbox from './IndeterminateCheckbox'
-import { FiltersContext, FiltersDispatchContext } from '../contexts/FiltersContext'
+import {
+  FiltersContext,
+  FiltersDispatchContext,
+} from '../contexts/FiltersContext'
 import { Action, CheckboxState } from '../types'
 
 function SpeedFilter() {
@@ -20,15 +23,15 @@ function SpeedFilter() {
   const handleCheckboxChange = (state: CheckboxState) => {
     if (state === CheckboxState.Checked) {
       dispatch({
-        type: Action.FastSelected
+        type: Action.FastSelected,
       })
     } else if (state === CheckboxState.Indeterminate) {
       dispatch({
-        type: Action.FastRejected
+        type: Action.FastRejected,
       })
     } else {
       dispatch({
-        type: Action.FastUnselected
+        type: Action.FastUnselected,
       })
     }
   }

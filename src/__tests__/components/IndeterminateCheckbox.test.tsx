@@ -12,7 +12,7 @@ describe('IndeterminateCheckbox', () => {
         label="Hi"
         onChange={jest.fn}
         state={CheckboxState.Unchecked}
-      />
+      />,
     )
 
     const checkbox = screen.getByRole('checkbox') as HTMLInputElement
@@ -32,14 +32,21 @@ describe('IndeterminateCheckbox', () => {
         state={CheckboxState.Unchecked}
       >
         <h1>Hello World</h1>
-      </IndeterminateCheckbox>
+      </IndeterminateCheckbox>,
     )
 
     expect(screen.getByText(/hello world/i)).toBeVisible()
   })
 
   test('renders a disabled checkbox', () => {
-    render(<IndeterminateCheckbox disabled={true} label="Hi" onChange={jest.fn} state={CheckboxState.Unchecked} />)
+    render(
+      <IndeterminateCheckbox
+        disabled={true}
+        label="Hi"
+        onChange={jest.fn}
+        state={CheckboxState.Unchecked}
+      />,
+    )
 
     expect(screen.getByRole('checkbox')).toHaveAttribute('disabled')
   })
@@ -51,7 +58,7 @@ describe('IndeterminateCheckbox', () => {
         label="Hi"
         onChange={jest.fn}
         state={CheckboxState.Checked}
-      />
+      />,
     )
 
     const checkbox = screen.getByRole('checkbox') as HTMLInputElement
@@ -67,7 +74,7 @@ describe('IndeterminateCheckbox', () => {
         label="Hi"
         onChange={jest.fn}
         state={CheckboxState.Indeterminate}
-      />
+      />,
     )
 
     const checkbox = screen.getByRole('checkbox') as HTMLInputElement
@@ -85,7 +92,7 @@ describe('IndeterminateCheckbox', () => {
         label="Hi"
         onChange={mockFn}
         state={CheckboxState.Unchecked}
-      />
+      />,
     )
 
     const checkbox = screen.getByRole('checkbox')
@@ -104,7 +111,7 @@ describe('IndeterminateCheckbox', () => {
         label="Hi"
         onChange={mockFn}
         state={CheckboxState.Checked}
-      />
+      />,
     )
 
     const checkbox = screen.getByRole('checkbox')
@@ -123,7 +130,7 @@ describe('IndeterminateCheckbox', () => {
         label="Hi"
         onChange={mockFn}
         state={CheckboxState.Indeterminate}
-      />
+      />,
     )
 
     const checkbox = screen.getByRole('checkbox')

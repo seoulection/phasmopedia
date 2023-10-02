@@ -4,14 +4,17 @@ const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '\\.css|png?$': '<rootDir>/__mocks__/mock.ts'
+    '\\.css|png?$': '<rootDir>/__mocks__/mock.ts',
   },
-  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/src/__tests__/helpers.ts'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/src/__tests__/helpers.ts',
+  ],
   transform: {
-    '\\.[jt]sx?$': 'ts-jest'
+    '\\.[jt]sx?$': 'ts-jest',
   },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
-  verbose: true
+  verbose: true,
 }
 
 export default config

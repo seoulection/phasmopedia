@@ -9,52 +9,56 @@ function filtersReducer(filters: Filter, action: any): Filter {
       return {
         ...filters,
         rejectedEvidences: rejectedEvidences.concat(action.evidence),
-        selectedEvidences: selectedEvidences.filter(filter => filter !== action.evidence)
+        selectedEvidences: selectedEvidences.filter(
+          (filter) => filter !== action.evidence,
+        ),
       }
     }
 
     case Action.EvidenceSelected: {
       return {
         ...filters,
-        selectedEvidences: selectedEvidences.concat(action.evidence)
+        selectedEvidences: selectedEvidences.concat(action.evidence),
       }
     }
 
     case Action.EvidenceUnselected: {
       return {
         ...filters,
-        rejectedEvidences: rejectedEvidences.filter(filter => filter !== action.evidence)
+        rejectedEvidences: rejectedEvidences.filter(
+          (filter) => filter !== action.evidence,
+        ),
       }
     }
 
     case Action.FastRejected: {
       return {
         ...filters,
-        isFast: false
+        isFast: false,
       }
     }
 
     case Action.FastSelected: {
       return {
         ...filters,
-        isFast: true
+        isFast: true,
       }
     }
     case Action.FastUnselected: {
       return {
         ...filters,
-        isFast: null
+        isFast: null,
       }
     }
 
     case Action.GhostToggled: {
-      const newRejectedGhosts = rejectedGhosts.includes(action.name) ?
-        rejectedGhosts.filter((name: string) => action.name !== name) :
-        rejectedGhosts.concat(action.name)
+      const newRejectedGhosts = rejectedGhosts.includes(action.name)
+        ? rejectedGhosts.filter((name: string) => action.name !== name)
+        : rejectedGhosts.concat(action.name)
 
       return {
         ...filters,
-        rejectedGhosts: newRejectedGhosts
+        rejectedGhosts: newRejectedGhosts,
       }
     }
 
@@ -63,7 +67,7 @@ function filtersReducer(filters: Filter, action: any): Filter {
         isFast: null,
         rejectedEvidences: [],
         rejectedGhosts: [],
-        selectedEvidences: []
+        selectedEvidences: [],
       }
     }
 

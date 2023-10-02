@@ -1,5 +1,8 @@
 import { useContext } from 'react'
-import { FiltersContext, FiltersDispatchContext } from '../contexts/FiltersContext'
+import {
+  FiltersContext,
+  FiltersDispatchContext,
+} from '../contexts/FiltersContext'
 import IndeterminateCheckbox from './IndeterminateCheckbox'
 import Evidence from './Evidence'
 import { Action, CheckboxState, Evidence as EvidenceEnum } from '../types'
@@ -24,9 +27,7 @@ function EvidenceFilter() {
     )
   }
 
-  const determineState = (
-    evidence: EvidenceEnum
-  ) => {
+  const determineState = (evidence: EvidenceEnum) => {
     if (selectedEvidences.includes(evidence)) {
       return CheckboxState.Checked
     } else if (rejectedEvidences.includes(evidence)) {
@@ -40,17 +41,17 @@ function EvidenceFilter() {
     if (state === CheckboxState.Checked) {
       dispatch({
         evidence: evidence,
-        type: Action.EvidenceSelected
+        type: Action.EvidenceSelected,
       })
     } else if (state === CheckboxState.Indeterminate) {
       dispatch({
         evidence: evidence,
-        type: Action.EvidenceRejected
+        type: Action.EvidenceRejected,
       })
     } else {
       dispatch({
         evidence: evidence,
-        type: Action.EvidenceUnselected
+        type: Action.EvidenceUnselected,
       })
     }
   }

@@ -8,10 +8,7 @@ interface IGhostsContainer {
 function GhostsContainer({ ghosts }: IGhostsContainer) {
   const populateGhostsContainer = () => {
     return ghosts.map((ghost: Ghost) => (
-      <GhostCard
-        key={ghost.name}
-        ghost={ghost}
-      />
+      <GhostCard key={ghost.name} ghost={ghost} />
     ))
   }
 

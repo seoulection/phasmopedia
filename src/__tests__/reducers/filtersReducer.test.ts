@@ -5,7 +5,10 @@ import { Action, Evidence } from '../../types'
 describe('filtersReducer', () => {
   test('adds to selected filters', () => {
     const filters = setupFilters()
-    const action = { evidence: Evidence.DOTSProjector, type: Action.EvidenceSelected }
+    const action = {
+      evidence: Evidence.DOTSProjector,
+      type: Action.EvidenceSelected,
+    }
 
     const { selectedEvidences } = filtersReducer(filters, action)
 
@@ -14,11 +17,17 @@ describe('filtersReducer', () => {
 
   test('moves from selected filters to rejected filters', () => {
     const filters = setupFilters({
-      selectedEvidences: [Evidence.GhostOrb]
+      selectedEvidences: [Evidence.GhostOrb],
     })
-    const action = { evidence: Evidence.GhostOrb, type: Action.EvidenceRejected }
+    const action = {
+      evidence: Evidence.GhostOrb,
+      type: Action.EvidenceRejected,
+    }
 
-    const { rejectedEvidences, selectedEvidences } = filtersReducer(filters, action)
+    const { rejectedEvidences, selectedEvidences } = filtersReducer(
+      filters,
+      action,
+    )
 
     expect(selectedEvidences.includes(Evidence.GhostOrb)).toEqual(false)
     expect(rejectedEvidences.includes(Evidence.GhostOrb)).toEqual(true)
@@ -26,9 +35,12 @@ describe('filtersReducer', () => {
 
   test('removes from rejected filters', () => {
     const filters = setupFilters({
-      rejectedEvidences: [Evidence.GhostWriting]
+      rejectedEvidences: [Evidence.GhostWriting],
     })
-    const action = { evidence: Evidence.GhostWriting, type: Action.EvidenceUnselected }
+    const action = {
+      evidence: Evidence.GhostWriting,
+      type: Action.EvidenceUnselected,
+    }
 
     const { rejectedEvidences } = filtersReducer(filters, action)
 
@@ -37,7 +49,7 @@ describe('filtersReducer', () => {
 
   test('sets isFast to true', () => {
     const filters = setupFilters({
-      isFast: null
+      isFast: null,
     })
     const action = { type: Action.FastSelected }
 
@@ -48,7 +60,7 @@ describe('filtersReducer', () => {
 
   test('sets isFast to false', () => {
     const filters = setupFilters({
-      isFast: true
+      isFast: true,
     })
     const action = { type: Action.FastRejected }
 
@@ -59,7 +71,7 @@ describe('filtersReducer', () => {
 
   test('sets isFast to null', () => {
     const filters = setupFilters({
-      isFast: false
+      isFast: false,
     })
     const action = { type: Action.FastUnselected }
 
@@ -72,17 +84,26 @@ describe('filtersReducer', () => {
     const toggleOnFilters = setupFilters()
     const toggleOnAction = { name: 'some ghost', type: Action.GhostToggled }
 
-    const { rejectedGhosts: toggleOnRejectedGhosts } = filtersReducer(toggleOnFilters, toggleOnAction)
+    const { rejectedGhosts: toggleOnRejectedGhosts } = filtersReducer(
+      toggleOnFilters,
+      toggleOnAction,
+    )
 
     expect(toggleOnRejectedGhosts.includes('some ghost')).toEqual(true)
 
     const toggleOffFilters = setupFilters({
-      rejectedGhosts: ['some other ghost']
+      rejectedGhosts: ['some other ghost'],
     })
 
-    const toggleOffAction = { name: 'some other ghost', type: Action.GhostToggled }
+    const toggleOffAction = {
+      name: 'some other ghost',
+      type: Action.GhostToggled,
+    }
 
-    const { rejectedGhosts: toggleOffRejectedGhosts } = filtersReducer(toggleOffFilters, toggleOffAction)
+    const { rejectedGhosts: toggleOffRejectedGhosts } = filtersReducer(
+      toggleOffFilters,
+      toggleOffAction,
+    )
 
     expect(toggleOffRejectedGhosts.includes('some other ghost')).toEqual(false)
   })
@@ -92,7 +113,7 @@ describe('filtersReducer', () => {
       isFast: true,
       rejectedEvidences: [Evidence.GhostOrb],
       rejectedGhosts: ['some rejected ghost'],
-      selectedEvidences: [Evidence.SpiritBox]
+      selectedEvidences: [Evidence.SpiritBox],
     }
 
     const action = { type: Action.Reset }
@@ -103,7 +124,7 @@ describe('filtersReducer', () => {
       isFast: null,
       rejectedEvidences: [],
       rejectedGhosts: [],
-      selectedEvidences: []
+      selectedEvidences: [],
     })
   })
 })

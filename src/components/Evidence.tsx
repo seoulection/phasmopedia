@@ -19,7 +19,7 @@ const EVIDENCE_MAP = {
   [EvidenceEnum.GhostOrb]: orbsImg,
   [EvidenceEnum.GhostWriting]: bookImg,
   [EvidenceEnum.SpiritBox]: spiritBoxImg,
-  [EvidenceEnum.Ultraviolet]: fingiesImg
+  [EvidenceEnum.Ultraviolet]: fingiesImg,
 }
 
 function Evidence({ evidence, isGuaranteed }: IEvidence) {
@@ -28,7 +28,7 @@ function Evidence({ evidence, isGuaranteed }: IEvidence) {
       return <span className="evidence__highlight"></span>
     }
 
-    return ""
+    return ''
   }
 
   return (
