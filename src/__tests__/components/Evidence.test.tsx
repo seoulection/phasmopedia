@@ -7,7 +7,9 @@ describe('Evidence', () => {
   test('renders an image of evidence', () => {
     render(<Evidence evidence={EvidenceEnum.GhostOrb} isGuaranteed={false} />)
 
-    expect(screen.getByRole('img', { name: EvidenceEnum.GhostOrb })).toBeVisible()
+    expect(
+      screen.getByRole('img', { name: EvidenceEnum.GhostOrb }),
+    ).toBeVisible()
   })
 
   test('renders a highlight if evidence is guaranteed', () => {

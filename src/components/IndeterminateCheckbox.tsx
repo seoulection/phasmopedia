@@ -9,20 +9,26 @@ interface IIndeterminateCheckbox {
   children?: JSX.Element
 }
 
-function IndeterminateCheckbox({ children, disabled, label, onChange, state }: IIndeterminateCheckbox) {
+function IndeterminateCheckbox({
+  children,
+  disabled,
+  label,
+  onChange,
+  state,
+}: IIndeterminateCheckbox) {
   const checkboxRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (checkboxRef && checkboxRef.current) {
       if (state === CheckboxState.Checked) {
-        checkboxRef.current.checked = true;
-        checkboxRef.current.indeterminate = false;
+        checkboxRef.current.checked = true
+        checkboxRef.current.indeterminate = false
       } else if (state === CheckboxState.Unchecked) {
-        checkboxRef.current.checked = false;
-        checkboxRef.current.indeterminate = false;
+        checkboxRef.current.checked = false
+        checkboxRef.current.indeterminate = false
       } else {
-        checkboxRef.current.checked = false;
-        checkboxRef.current.indeterminate = true;
+        checkboxRef.current.checked = false
+        checkboxRef.current.indeterminate = true
       }
     }
   }, [state])

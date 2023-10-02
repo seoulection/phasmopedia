@@ -1,19 +1,24 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { FiltersContext, FiltersDispatchContext } from '../../contexts/FiltersContext'
+import {
+  FiltersContext,
+  FiltersDispatchContext,
+} from '../../contexts/FiltersContext'
 import SpeedFilter from '../../components/SpeedFilter'
 import { Action } from '../../types'
 import { INITIAL_FILTERS } from '../../../static/common'
 
 describe('SpeedFilter', () => {
-  const dispatchHandler = jest.fn();
+  const dispatchHandler = jest.fn()
 
   test('renders a checkbox for speed', () => {
     renderWithContexts()
 
     expect(screen.getByText(/speed/i)).toBeVisible()
-    expect(screen.getByRole('checkbox', { name: 'Fast as Fuck Boi' })).toBeVisible()
+    expect(
+      screen.getByRole('checkbox', { name: 'Fast as Fuck Boi' }),
+    ).toBeVisible()
   })
 
   test('renders a checked checkbox if isFast is true', () => {
@@ -46,7 +51,7 @@ describe('SpeedFilter', () => {
     await userEvent.click(screen.getByRole('checkbox'))
 
     expect(dispatchHandler).toHaveBeenCalledWith({
-      type: Action.FastSelected
+      type: Action.FastSelected,
     })
   })
 
@@ -56,7 +61,7 @@ describe('SpeedFilter', () => {
     await userEvent.click(screen.getByRole('checkbox'))
 
     expect(dispatchHandler).toHaveBeenCalledWith({
-      type: Action.FastRejected
+      type: Action.FastRejected,
     })
   })
 
@@ -66,7 +71,7 @@ describe('SpeedFilter', () => {
     await userEvent.click(screen.getByRole('checkbox'))
 
     expect(dispatchHandler).toHaveBeenCalledWith({
-      type: Action.FastUnselected
+      type: Action.FastUnselected,
     })
   })
 
@@ -76,7 +81,7 @@ describe('SpeedFilter', () => {
         <FiltersDispatchContext.Provider value={dispatchHandler}>
           <SpeedFilter />
         </FiltersDispatchContext.Provider>
-      </FiltersContext.Provider>
+      </FiltersContext.Provider>,
     )
   }
 })

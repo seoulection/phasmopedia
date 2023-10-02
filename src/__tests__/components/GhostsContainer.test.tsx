@@ -13,17 +13,21 @@ const GHOSTS = [
     isFast: true,
     sanity: 50,
     strengths: ['some strength'],
-    weaknesses: ['some weakness']
+    weaknesses: ['some weakness'],
   },
   {
     name: 'Ghost 2',
-    evidences: [Evidence.EMFLevelFive, Evidence.SpiritBox, Evidence.Ultraviolet],
+    evidences: [
+      Evidence.EMFLevelFive,
+      Evidence.SpiritBox,
+      Evidence.Ultraviolet,
+    ],
     guaranteedEvidence: null,
     isFast: false,
     sanity: 50,
     strengths: ['some strength'],
-    weaknesses: ['some weakness']
-  }
+    weaknesses: ['some weakness'],
+  },
 ]
 
 describe('GhostsContainer', () => {
@@ -61,7 +65,7 @@ describe('GhostsContainer', () => {
     render(
       <FiltersContext.Provider value={{ ...INITIAL_FILTERS, ...overrides }}>
         <GhostsContainer ghosts={GHOSTS} />
-      </FiltersContext.Provider>
+      </FiltersContext.Provider>,
     )
   }
 })

@@ -1,5 +1,8 @@
 import { useReducer } from 'react'
-import { FiltersContext, FiltersDispatchContext } from './contexts/FiltersContext'
+import {
+  FiltersContext,
+  FiltersDispatchContext,
+} from './contexts/FiltersContext'
 import filtersReducer from './reducers/filtersReducer'
 import EvidenceFilter from './components/EvidenceFilter'
 import SpeedFilter from './components/SpeedFilter'

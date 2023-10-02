@@ -4,5 +4,5 @@ export const INITIAL_FILTERS: Filter = {
   isFast: null,
   rejectedEvidences: [],
   rejectedGhosts: [],
-  selectedEvidences: []
+  selectedEvidences: [],
 }

@@ -6,6 +6,6 @@ export function setupFilters(overrides: object = {}): Filter {
     rejectedEvidences: [],
     rejectedGhosts: [],
     selectedEvidences: [],
-    ...overrides
+    ...overrides,
   }
 }
