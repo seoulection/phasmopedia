@@ -5,6 +5,8 @@ const config: Config = {
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '\\.css|png?$': '<rootDir>/__mocks__/mock.ts',
+    '@/(.*)$': '<rootDir>/src/$1',
+    '@static/(.*)$': '<rootDir>/static/$1'
   },
   testPathIgnorePatterns: [
     '/node_modules/',

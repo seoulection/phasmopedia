@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import IndeterminateCheckbox from '../../components/IndeterminateCheckbox'
-import { CheckboxState } from '../../types'
+import IndeterminateCheckbox from '@/components/IndeterminateCheckbox'
+import { CheckboxState } from '@/types'
 
 describe('IndeterminateCheckbox', () => {
   test('renders a checkbox with label', () => {

@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import { contextRender, screen } from '../test-utils'
 import userEvent from '@testing-library/user-event'
-import SpeedFilter from '../../components/SpeedFilter'
-import { Action } from '../../types'
+import SpeedFilter from '@/components/SpeedFilter'
+import { Action } from '@/types'
 
 describe('SpeedFilter', () => {
   const dispatchHandler = jest.fn()

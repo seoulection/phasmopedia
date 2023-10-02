@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import { contextRender, screen } from '../test-utils'
 import userEvent from '@testing-library/user-event'
-import EvidenceFilter from '../../components/EvidenceFilter'
-import { Action, Evidence } from '../../types'
+import EvidenceFilter from '@/components/EvidenceFilter'
+import { Action, Evidence } from '@/types'
 
 describe('EvidenceFilter', () => {
   const dispatchHandler = jest.fn()

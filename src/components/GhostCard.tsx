@@ -2,9 +2,9 @@ import { useContext } from 'react'
 import {
   FiltersContext,
   FiltersDispatchContext,
-} from '../contexts/FiltersContext'
+} from '@/contexts/FiltersContext'
 import Evidence from './Evidence'
-import { Action, Ghost } from '../types'
+import { Action, Ghost } from '@/types'
 
 interface IGhostCard {
   ghost: Ghost

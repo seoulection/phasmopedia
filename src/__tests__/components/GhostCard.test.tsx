@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom'
 import { contextRender, screen } from '../test-utils'
 import userEvent from '@testing-library/user-event'
-import GhostCard from '../../components/GhostCard'
-import { Action, Evidence, Ghost } from '../../types'
+import GhostCard from '@/components/GhostCard'
+import { Action, Evidence, Ghost } from '@/types'
 
 describe('GhostCard', () => {
   const dispatchHandler = jest.fn()

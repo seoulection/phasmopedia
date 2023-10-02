@@ -1,6 +1,6 @@
-import filtersReducer from '../../reducers/filtersReducer'
-import { Action, Evidence, Filter } from '../../types'
-import { INITIAL_FILTERS } from '../../../static/common'
+import filtersReducer from '@/reducers/filtersReducer'
+import { Action, Evidence, Filter } from '@/types'
+import { INITIAL_FILTERS } from '@static/common'
 
 describe('filtersReducer', () => {
   test('adds to selected filters', () => {

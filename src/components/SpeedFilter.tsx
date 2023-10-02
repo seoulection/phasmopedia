@@ -3,8 +3,8 @@ import IndeterminateCheckbox from './IndeterminateCheckbox'
 import {
   FiltersContext,
   FiltersDispatchContext,
-} from '../contexts/FiltersContext'
-import { Action, CheckboxState } from '../types'
+} from '@/contexts/FiltersContext'
+import { Action, CheckboxState } from '@/types'
 
 function SpeedFilter() {
   const { isFast } = useContext(FiltersContext)

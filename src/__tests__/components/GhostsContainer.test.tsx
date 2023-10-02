@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { contextRender, screen } from '../test-utils'
-import GhostsContainer from '../../components/GhostsContainer'
-import { Evidence } from '../../types'
+import GhostsContainer from '@/components/GhostsContainer'
+import { Evidence } from '@/types'
 
 const GHOSTS = [
   {
