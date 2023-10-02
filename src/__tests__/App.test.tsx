@@ -20,7 +20,7 @@ describe('App', () => {
     expect(screen.getByTestId('ghosts-container')).toBeVisible()
   })
 
-  test('renders ghost cards based on filter', async () => {
+  test('renders ghost cards based on evidences', async () => {
     expect(screen.getAllByTestId('ghost-card').length).toEqual(24)
 
     const dots = screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i })
@@ -28,5 +28,15 @@ describe('App', () => {
     await userEvent.click(dots)
 
     expect(screen.getAllByTestId('ghost-card').length).toEqual(10)
+  })
+
+  test('renders ghost cards based on speed', async () => {
+    expect(screen.getAllByTestId('ghost-card').length).toEqual(24)
+
+    const speed = screen.getByRole('checkbox', { name: 'Fast as Fuck Boi' })
+
+    await userEvent.click(speed)
+
+    expect(screen.getAllByTestId('ghost-card').length).toEqual(9)
   })
 })

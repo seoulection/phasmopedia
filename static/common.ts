@@ -1,7 +1,8 @@
 import { Filter } from '../src/types'
 
 export const INITIAL_FILTERS: Filter = {
-  rejectedFilters: [],
+  isFast: null,
+  rejectedEvidences: [],
   rejectedGhosts: [],
-  selectedFilters: []
+  selectedEvidences: []
 }

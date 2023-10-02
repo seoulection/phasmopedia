@@ -14,6 +14,7 @@ describe('GhostCard', () => {
       name: 'Ghost',
       evidences: [Evidence.GhostOrb, Evidence.GhostWriting, Evidence.Ultraviolet],
       guaranteedEvidence: null,
+      isFast: true,
       sanity: 40,
       strengths: ['some strength'],
       weaknesses: ['some weakness']
@@ -36,12 +37,13 @@ describe('GhostCard', () => {
       name: 'Ghost',
       evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.GhostWriting],
       guaranteedEvidence: null,
+      isFast: true,
       sanity: 40,
       strengths: ['some strength'],
       weaknesses: ['some weakness']
     }
 
-    renderWithContexts(ghost, { selectedFilters: [Evidence.Ultraviolet] })
+    renderWithContexts(ghost, { selectedEvidences: [Evidence.Ultraviolet] })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -55,12 +57,13 @@ describe('GhostCard', () => {
       name: 'Ghost',
       evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
       guaranteedEvidence: null,
+      isFast: true,
       sanity: 40,
       strengths: ['some strength'],
       weaknesses: ['some weakness']
     }
 
-    renderWithContexts(ghost, { rejectedFilters: [Evidence.Ultraviolet] })
+    renderWithContexts(ghost, { rejectedEvidences: [Evidence.Ultraviolet] })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -74,6 +77,7 @@ describe('GhostCard', () => {
       name: 'Ghost',
       evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
       guaranteedEvidence: null,
+      isFast: true,
       sanity: 40,
       strengths: ['some strength'],
       weaknesses: ['some weakness']
@@ -86,8 +90,98 @@ describe('GhostCard', () => {
     expect(dispatchHandler).toHaveBeenCalledWith({ name: 'Ghost', type: Action.GhostToggled })
   })
 
+  test('renders ghost card if fast selected and ghost is fast', () => {
+    const ghost: Ghost = {
+      name: 'Ghost',
+      evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
+      guaranteedEvidence: null,
+      isFast: true,
+      sanity: 40,
+      strengths: ['some strength'],
+      weaknesses: ['some weakness']
+    }
+
+    renderWithContexts(ghost, { isFast: true })
+
+    expect(screen.getByText(ghost.name)).toBeVisible()
+    expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeVisible()
+    expect(screen.getByText(/some strength/i)).toBeVisible()
+    expect(screen.getByText(/some weakness/i)).toBeVisible()
+
+    ghost.evidences.forEach((evidence) => {
+      expect(screen.getByRole('img', { name: evidence })).toBeVisible()
+    })
+  })
+
+  test('does not render ghost card if fast selected and ghost is not fast', () => {
+    const ghost: Ghost = {
+      name: 'Ghost',
+      evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
+      guaranteedEvidence: null,
+      isFast: false,
+      sanity: 40,
+      strengths: ['some strength'],
+      weaknesses: ['some weakness']
+    }
+
+    renderWithContexts(ghost, { isFast: true })
+
+    expect(screen.queryByText(ghost.name)).toBeNull()
+    expect(screen.queryAllByRole('img').length).toEqual(0)
+    expect(screen.queryByText(`Sanity: ${ghost.sanity}%`)).toBeNull()
+    expect(screen.queryByText(/some strength/i)).toBeNull()
+    expect(screen.queryByText(/some weakness/i)).toBeNull()
+  })
+
+  test('does not render ghost card if fast is indeterminate and ghost is fast', () => {
+    const ghost: Ghost = {
+      name: 'Ghost',
+      evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
+      guaranteedEvidence: null,
+      isFast: true,
+      sanity: 40,
+      strengths: ['some strength'],
+      weaknesses: ['some weakness']
+    }
+
+    renderWithContexts(ghost, { isFast: false })
+
+    expect(screen.queryByText(ghost.name)).toBeNull()
+    expect(screen.queryAllByRole('img').length).toEqual(0)
+    expect(screen.queryByText(`Sanity: ${ghost.sanity}%`)).toBeNull()
+    expect(screen.queryByText(/some strength/i)).toBeNull()
+    expect(screen.queryByText(/some weakness/i)).toBeNull()
+  })
+
+  test('renders ghost card if fast is unselected regardless of ghost speed', () => {
+    [true, false].forEach(isFast => {
+      const ghost: Ghost = {
+        name: 'Ghost',
+        evidences: [Evidence.EMFLevelFive, Evidence.GhostOrb, Evidence.Ultraviolet],
+        guaranteedEvidence: null,
+        isFast,
+        sanity: 40,
+        strengths: ['some strength'],
+        weaknesses: ['some weakness']
+      }
+
+      const { unmount } = renderWithContexts(ghost, { isFast: null })
+
+      expect(screen.getByText(ghost.name)).toBeVisible()
+      expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeVisible()
+      expect(screen.getByText(/some strength/i)).toBeVisible()
+      expect(screen.getByText(/some weakness/i)).toBeVisible()
+
+      ghost.evidences.forEach((evidence) => {
+        expect(screen.getByRole('img', { name: evidence })).toBeVisible()
+      })
+
+      unmount()
+    })
+  })
+
   function renderWithContexts(ghost: Ghost, overrides: object = {}) {
-    render(
+    return render(
       <FiltersContext.Provider value={{ ...INITIAL_FILTERS, ...overrides }}>
         <FiltersDispatchContext.Provider value={dispatchHandler}>
           <GhostCard ghost={ghost} />
