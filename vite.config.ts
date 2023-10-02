@@ -10,6 +10,6 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src'),
       '@static': resolve(__dirname, 'static'),
-    }
-  }
+    },
+  },
 })

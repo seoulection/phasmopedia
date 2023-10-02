@@ -11,5 +11,5 @@ export {
   GhostCard,
   GhostsContainer,
   IndeterminateCheckbox,
-  SpeedFilter
+  SpeedFilter,
 }

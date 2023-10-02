@@ -35,10 +35,16 @@ section {
 }
 
 .evidence-filter,
+.reset-button,
 .speed-filter {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+}
+
+.reset-button {
+  font-size: 24px;
+  margin-top: 32px;
 }
 
 .ghosts-container {
@@ -119,7 +125,6 @@ header {
 }
 
 header h1 {
-  cursor: pointer;
   margin: 1rem 0;
 }
 

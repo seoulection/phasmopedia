@@ -38,8 +38,8 @@ describe('GhostsContainer', () => {
   test('considers selected filters to render ghosts', () => {
     contextRender(<GhostsContainer ghosts={GHOSTS} />, {
       filterOverrides: {
-        selectedEvidences: [Evidence.SpiritBox]
-      }
+        selectedEvidences: [Evidence.SpiritBox],
+      },
     })
 
     expect(screen.getAllByRole('heading').length).toEqual(1)
@@ -48,8 +48,8 @@ describe('GhostsContainer', () => {
   test('considers rejected filters to render ghosts', () => {
     contextRender(<GhostsContainer ghosts={GHOSTS} />, {
       filterOverrides: {
-        rejectedEvidences: [Evidence.Ultraviolet]
-      }
+        rejectedEvidences: [Evidence.Ultraviolet],
+      },
     })
 
     expect(screen.queryAllByRole('heading').length).toEqual(0)
@@ -58,8 +58,8 @@ describe('GhostsContainer', () => {
   test('considers fast selected filter to render ghosts', () => {
     contextRender(<GhostsContainer ghosts={GHOSTS} />, {
       filterOverrides: {
-        isFast: true
-      }
+        isFast: true,
+      },
     })
 
     expect(screen.getAllByRole('heading').length).toEqual(1)
@@ -68,8 +68,8 @@ describe('GhostsContainer', () => {
   test('considers fast rejected filter to render ghosts', () => {
     contextRender(<GhostsContainer ghosts={GHOSTS} />, {
       filterOverrides: {
-        isFast: false
-      }
+        isFast: false,
+      },
     })
 
     expect(screen.getAllByRole('heading').length).toEqual(1)

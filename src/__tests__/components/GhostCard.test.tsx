@@ -49,7 +49,9 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { selectedEvidences: [Evidence.Ultraviolet] } })
+    contextRender(<GhostCard ghost={ghost} />, {
+      filterOverrides: { selectedEvidences: [Evidence.Ultraviolet] },
+    })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -73,7 +75,9 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { rejectedEvidences: [Evidence.Ultraviolet] } })
+    contextRender(<GhostCard ghost={ghost} />, {
+      filterOverrides: { rejectedEvidences: [Evidence.Ultraviolet] },
+    })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -122,7 +126,9 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { isFast: true } })
+    contextRender(<GhostCard ghost={ghost} />, {
+      filterOverrides: { isFast: true },
+    })
 
     expect(screen.getByText(ghost.name)).toBeVisible()
     expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeVisible()
@@ -149,7 +155,9 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { isFast: true } })
+    contextRender(<GhostCard ghost={ghost} />, {
+      filterOverrides: { isFast: true },
+    })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -173,7 +181,9 @@ describe('GhostCard', () => {
       weaknesses: ['some weakness'],
     }
 
-    contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { isFast: false } })
+    contextRender(<GhostCard ghost={ghost} />, {
+      filterOverrides: { isFast: false },
+    })
 
     expect(screen.queryByText(ghost.name)).toBeNull()
     expect(screen.queryAllByRole('img').length).toEqual(0)
@@ -198,7 +208,9 @@ describe('GhostCard', () => {
         weaknesses: ['some weakness'],
       }
 
-      const { unmount } = contextRender(<GhostCard ghost={ghost} />, { filterOverrides: { isFast: null } })
+      const { unmount } = contextRender(<GhostCard ghost={ghost} />, {
+        filterOverrides: { isFast: null },
+      })
 
       expect(screen.getByText(ghost.name)).toBeVisible()
       expect(screen.getByText(`Sanity: ${ghost.sanity}%`)).toBeVisible()

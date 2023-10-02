@@ -19,15 +19,19 @@ function App() {
       <FiltersDispatchContext.Provider value={dispatch}>
         <div className="app">
           <header className="header">
-            <h1 onClick={() => dispatch({ type: Action.Reset })}>
-              Phasmopedia
-            </h1>
+            <h1>Phasmopedia</h1>
           </header>
           <section className="container">
             <GhostsContainer ghosts={GHOSTS} />
             <aside className="filters">
               <EvidenceFilter />
               <SpeedFilter />
+              <button
+                className="reset-button"
+                onClick={() => dispatch({ type: Action.Reset })}
+              >
+                Reset
+              </button>
             </aside>
           </section>
         </div>
