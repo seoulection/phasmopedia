@@ -1,6 +1,6 @@
 import filtersReducer from '../../reducers/filtersReducer'
-import { setupFilters } from '../helpers'
-import { Action, Evidence } from '../../types'
+import { Action, Evidence, Filter } from '../../types'
+import { INITIAL_FILTERS } from '../../../static/common'
 
 describe('filtersReducer', () => {
   test('adds to selected filters', () => {
@@ -128,3 +128,10 @@ describe('filtersReducer', () => {
     })
   })
 })
+
+function setupFilters(overrides: object = {}): Filter {
+  return {
+    ...INITIAL_FILTERS,
+    ...overrides,
+  }
+}

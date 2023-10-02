@@ -1,19 +1,14 @@
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import { contextRender, screen } from '../test-utils'
 import userEvent from '@testing-library/user-event'
-import {
-  FiltersContext,
-  FiltersDispatchContext,
-} from '../../contexts/FiltersContext'
 import EvidenceFilter from '../../components/EvidenceFilter'
 import { Action, Evidence } from '../../types'
-import { INITIAL_FILTERS } from '../../../static/common'
 
 describe('EvidenceFilter', () => {
   const dispatchHandler = jest.fn()
 
   test('creates checkboxes for each evidence', () => {
-    renderWithContexts()
+    contextRender(<EvidenceFilter />)
 
     expect(screen.getByText(/evidences:/i)).toBeVisible()
 
@@ -33,7 +28,9 @@ describe('EvidenceFilter', () => {
   })
 
   test('renders a checked checkbox if evidence is in selected filters', () => {
-    renderWithContexts({ selectedEvidences: [Evidence.Ultraviolet] })
+    contextRender(<EvidenceFilter />, {
+      filterOverrides: { selectedEvidences: [Evidence.Ultraviolet] },
+    })
 
     const uv = screen.getByRole('checkbox', {
       name: /Ultraviolet/i,
@@ -47,7 +44,9 @@ describe('EvidenceFilter', () => {
   })
 
   test('renders an indeterminate checkbox if evidence is in rejected filters', () => {
-    renderWithContexts({ rejectedEvidences: [Evidence.DOTSProjector] })
+    contextRender(<EvidenceFilter />, {
+      filterOverrides: { rejectedEvidences: [Evidence.DOTSProjector] },
+    })
 
     const dots = screen.getByRole('checkbox', {
       name: /D.O.T.S. Projector/i,
@@ -57,7 +56,7 @@ describe('EvidenceFilter', () => {
   })
 
   test('clicking on an unchecked checkbox calls filter selected dispatch', async () => {
-    renderWithContexts()
+    contextRender(<EvidenceFilter />, { dispatchHandler })
 
     await userEvent.click(
       screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }),
@@ -70,7 +69,10 @@ describe('EvidenceFilter', () => {
   })
 
   test('clicking on a checked checkbox calls filter rejected dispatch', async () => {
-    renderWithContexts({ selectedEvidences: [Evidence.DOTSProjector] })
+    contextRender(<EvidenceFilter />, {
+      dispatchHandler,
+      filterOverrides: { selectedEvidences: [Evidence.DOTSProjector] },
+    })
 
     await userEvent.click(
       screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }),
@@ -83,7 +85,10 @@ describe('EvidenceFilter', () => {
   })
 
   test('clicking on an indeterminate checkbox calls filter unselected dispatch', async () => {
-    renderWithContexts({ rejectedEvidences: [Evidence.DOTSProjector] })
+    contextRender(<EvidenceFilter />, {
+      dispatchHandler,
+      filterOverrides: { rejectedEvidences: [Evidence.DOTSProjector] },
+    })
 
     await userEvent.click(
       screen.getByRole('checkbox', { name: /D.O.T.S. Projector/i }),
@@ -96,12 +101,14 @@ describe('EvidenceFilter', () => {
   })
 
   test('disables non-checked checkboxes if there are three selected filters', () => {
-    renderWithContexts({
-      selectedEvidences: [
-        Evidence.DOTSProjector,
-        Evidence.EMFLevelFive,
-        Evidence.FreezingTemperatures,
-      ],
+    contextRender(<EvidenceFilter />, {
+      filterOverrides: {
+        selectedEvidences: [
+          Evidence.DOTSProjector,
+          Evidence.EMFLevelFive,
+          Evidence.FreezingTemperatures,
+        ],
+      },
     })
 
     const dots = screen.getByRole('checkbox', {
@@ -144,14 +151,4 @@ describe('EvidenceFilter', () => {
       }
     })
   })
-
-  function renderWithContexts(overrides: object = {}) {
-    render(
-      <FiltersContext.Provider value={{ ...INITIAL_FILTERS, ...overrides }}>
-        <FiltersDispatchContext.Provider value={dispatchHandler}>
-          <EvidenceFilter />
-        </FiltersDispatchContext.Provider>
-      </FiltersContext.Provider>,
-    )
-  }
 })

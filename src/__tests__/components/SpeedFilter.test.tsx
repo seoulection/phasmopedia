@@ -1,19 +1,14 @@
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import { contextRender, screen } from '../test-utils'
 import userEvent from '@testing-library/user-event'
-import {
-  FiltersContext,
-  FiltersDispatchContext,
-} from '../../contexts/FiltersContext'
 import SpeedFilter from '../../components/SpeedFilter'
 import { Action } from '../../types'
-import { INITIAL_FILTERS } from '../../../static/common'
 
 describe('SpeedFilter', () => {
   const dispatchHandler = jest.fn()
 
   test('renders a checkbox for speed', () => {
-    renderWithContexts()
+    contextRender(<SpeedFilter />)
 
     expect(screen.getByText(/speed/i)).toBeVisible()
     expect(
@@ -22,7 +17,7 @@ describe('SpeedFilter', () => {
   })
 
   test('renders a checked checkbox if isFast is true', () => {
-    renderWithContexts({ isFast: true })
+    contextRender(<SpeedFilter />, { filterOverrides: { isFast: true } })
 
     const checkbox = screen.getByRole('checkbox') as HTMLInputElement
 
@@ -30,7 +25,7 @@ describe('SpeedFilter', () => {
   })
 
   test('renders an indeterminate checkbox if isFast is false', () => {
-    renderWithContexts({ isFast: false })
+    contextRender(<SpeedFilter />, { filterOverrides: { isFast: false } })
 
     const checkbox = screen.getByRole('checkbox') as HTMLInputElement
 
@@ -38,7 +33,7 @@ describe('SpeedFilter', () => {
   })
 
   test('renders an unchecked checkbox if isFast is null', () => {
-    renderWithContexts({ isFast: null })
+    contextRender(<SpeedFilter />, { filterOverrides: { isFast: null } })
 
     const checkbox = screen.getByRole('checkbox') as HTMLInputElement
 
@@ -46,7 +41,7 @@ describe('SpeedFilter', () => {
   })
 
   test('clicking on an unchecked checkbox calls fast selected dispatch', async () => {
-    renderWithContexts()
+    contextRender(<SpeedFilter />, { dispatchHandler })
 
     await userEvent.click(screen.getByRole('checkbox'))
 
@@ -56,7 +51,10 @@ describe('SpeedFilter', () => {
   })
 
   test('clicking on a checked checkbox calls fast rejected dispatch', async () => {
-    renderWithContexts({ isFast: true })
+    contextRender(<SpeedFilter />, {
+      dispatchHandler,
+      filterOverrides: { isFast: true },
+    })
 
     await userEvent.click(screen.getByRole('checkbox'))
 
@@ -66,7 +64,10 @@ describe('SpeedFilter', () => {
   })
 
   test('clicking on an indeterminate checkbox calls fast unselected dispatch', async () => {
-    renderWithContexts({ isFast: false })
+    contextRender(<SpeedFilter />, {
+      dispatchHandler,
+      filterOverrides: { isFast: false },
+    })
 
     await userEvent.click(screen.getByRole('checkbox'))
 
@@ -74,14 +75,4 @@ describe('SpeedFilter', () => {
       type: Action.FastUnselected,
     })
   })
-
-  function renderWithContexts(overrides: object = {}) {
-    render(
-      <FiltersContext.Provider value={{ ...INITIAL_FILTERS, ...overrides }}>
-        <FiltersDispatchContext.Provider value={dispatchHandler}>
-          <SpeedFilter />
-        </FiltersDispatchContext.Provider>
-      </FiltersContext.Provider>,
-    )
-  }
 })
